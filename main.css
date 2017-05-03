@@ -1,0 +1,43 @@
+#loginForm {
+  margin-top: 50px;
+  width: 35%;
+  height: 350px;
+  background-color: #9ad3de;
+}
+
+#loginInputs {
+  margin-top: 100px!important;
+  margin-right: auto;
+  margin-left: auto;
+  width: 70%;
+}
+
+#loginFormSignup {
+  margin-top: 50px;
+  width: 35%;
+  height: 520px;
+  background-color: #9ad3de;
+}
+
+#signupLink {
+  padding-top: 5px;
+}
+
+.form-group {
+  margin-bottom: 10px!important;
+}
+
+#signUpGroup, #signInGroup {
+  width: 80%;
+  margin-top: 5px!important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#modalForm {
+  margin-top: 50px!important;
+  margin-bottom: 50px!important;
+  margin-right: auto;
+  margin-left: auto;
+  width: 70%;
+}

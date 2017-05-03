@@ -1,0 +1,25 @@
+
+
+<div id="loginPage">
+	{{title}}
+
+	<div class="container" id="loginForm">
+		<div id="loginLogo">
+			<p>Logo</p>
+		</div>
+		<div id="loginInputs">
+			<fieldset>
+				<div class="form-group">
+					<label for="login">Podaj login</label>
+					<input type="text" id="login" class="form-control" ng-model="login"></input>
+				</div>
+				<div class="form-group">
+					<label for="password">Podaj hasło</label>
+					<input type="password" id="password" class="form-control" ng-model="password"></input>
+				</div>
+				<input type="submit" value="Zaloguj" ng-click="zaloguj()" class="btn btn-primary btn-block" data-ng-disabled="angularForm.$invalid">
+			</fieldset>
+			<p id="signupLink"><a ui-sref="signup">Nie masz jeszcze konta?</a></p>
+		</div>
+	</div>
+</div>
