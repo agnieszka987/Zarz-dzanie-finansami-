@@ -10,17 +10,17 @@
 				<fieldset>
 					<div class="form-group">
 						<label for="name">Nazwa:</label>
-						<input type="text" id="name" class="form-control"></input>
+						<input type="text" id="name" class="form-control" ng-model="name"></input>
 					</div>
 					<div class="form-group">
 						<label for="password">Hasło:</label>
-						<input type="password" id="password" class="form-control"></input>
+						<input type="password" id="password" class="form-control" ng-model="password"></input>
 					</div>
 					<div class="form-group">
 						<label for="password">Potwierdz hasło:</label>
-						<input type="password" id="name" class="form-control"></input>
+						<input type="password" id="name" class="form-control" ng-model="password2"></input>
 					</div>
 				</fieldset>
-				<input type="submit" value="Dodaj" class="btn btn-primary btn-block" data-ng-disabled="angularForm.$invalid">
+				<input ng-click="dodajGrupe()" type="submit" value="Dodaj" class="btn btn-primary btn-block" data-ng-disabled="angularForm.$invalid">
 			</div>
         </div>

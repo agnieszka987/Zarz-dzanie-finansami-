@@ -101,7 +101,6 @@ MyApp.controller("loginController", function ($scope, $http) {
     $scope.title = "loginController";
 
       $scope.zaloguj = function() {
-      	console.log("zaloguj..");
 
       	var parameter = JSON.stringify({type:"user", username:$scope.login, password:$scope.password});
 
@@ -115,62 +114,6 @@ MyApp.controller("loginController", function ($scope, $http) {
    			 		alert("Błędne hasło lub login");
    			 	}
    			 });
-
-/*
-
-$http.get("./js/login.php")
-   			 .then(function (response) {
-   			 	console.log(response.data.records);
-   			 	console.log("success");
-   			 });
-
-
-
-
-      //	console.log('Login: ' + $scope.login + " hasło: " + $scope.password);
-    //	 $http.push('./js/login.php').then(successCallback, errorCallback);
-  /*  var user_data='user_login=' +$scope.login +'&user_haslo='+$scope.password;
-
-			$http({
-				method: 'POST',
-				url: './js/login.php',
-				data: user_data,
-				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-			})
-			.then(successCallback,errorCallback);
-
-
-			function successCallback(response){
-			    alert("Zalogowano!");
-		        console.log(response);
-		        console.log("dane");
-			}
-			function errorCallback(error){
-			    console.log("blad");
-			} 
-			console.log('Login: ' + $scope.login + " hasło: " + $scope.password);
-		/*	var user_data='user_login=' +$scope.login +'&user_haslo='+$scope.password;
- 
-			$http({
-				method: 'POST',
-				url: './js/login.php',
-				data: user_data,
-				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-			})
-			.then(function(data) {
-       		 console.log(data);
-				if ( data.trim() === 'correct') {
-					console.log('correct');
-				} else {
-					console.log('correct');
-					//$scope.errorMsg = "Invalid Email and Password";
-				}
-			} 
-		})*/
-
-
-
-
 		} 
 });
 
@@ -182,8 +125,29 @@ MyApp.controller("page1Controller", function ($scope) {
     $scope.title = "page1Controller";
 });
 
-MyApp.controller("signupController", function ($scope) {
+MyApp.controller("signupController", function ($scope, $http) {
     $scope.title = "signupController";
+    $scope.dodajUzytkownika = function() {
+
+    	var parameterUser = JSON.stringify({type:"user", username:$scope.login, password:$scope.password, 
+    	name:$scope.name, email:$scope.email, surname:$scope.surname});
+
+    	$http.post("./js/newUser.php", parameterUser)
+
+   			 .then(function (response) {
+   			 	console.log(response.data);
+   			 	if (response.data == true) {
+   			 		alert("Dodano użytkwonika!");
+   			 		$scope.login = "";
+   			 		$scope.name = "";
+   			 		$scope.surname = "";
+   			 		$scope.password = "";
+   			 		$scope.email = "";
+   			 	} else {
+   			 		alert("Ups, coś poszło nie tak..");
+   			 	}
+   			 });
+    }
 });
 
 MyApp.controller("groupsController", function ($scope, $uibModal) {
@@ -192,7 +156,13 @@ MyApp.controller("groupsController", function ($scope, $uibModal) {
 		console.log('opening pop up');
 		var uibModalInstance = $uibModal.open({
 		templateUrl: 'templates/groups-new.html',
+		scope: $scope,
 		});
+
+		$scope.dodajGrupe = function() {
+		console.log("dodaj");
+	}
+
 	};
 	$scope.modalJoin = function () {
 		console.log('opening pop up');
@@ -200,6 +170,7 @@ MyApp.controller("groupsController", function ($scope, $uibModal) {
 		templateUrl: 'templates/groups-join.html',
 		});
 	};
+
 });
 
 MyApp.controller("navbarController", function ($scope) {
