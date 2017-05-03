@@ -1,5 +1,10 @@
 var MyApp = angular.module("MyApp", ['ui.router','ui.bootstrap']);
 
+MyApp.config(['$qProvider', function ($qProvider) {
+    $qProvider.errorOnUnhandledRejections(false);
+}]);
+
+
 MyApp.config(function($stateProvider, $urlRouterProvider){
 	$stateProvider
 	.state('main', {
@@ -109,15 +114,15 @@ MyApp.controller("loginController", function ($scope, $http) {
 			    console.log("blad");
 			} */
 			console.log('Login: ' + $scope.login + " hasło: " + $scope.password);
-			var user_data='user_login=' +$scope.login+'&user_haslo='+$scope.password;
+			var user_data='user_login=' +$scope.login +'&user_haslo='+$scope.password;
  
 			$http({
 				method: 'POST',
-				url: 'login.php',
+				url: 'js/login.php',
 				data: user_data,
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 			})
-			.success(function(data) {
+			.then(function(data) {
        		 console.log(data);
 				if ( data.trim() === 'correct') {
 					console.log('correct');
