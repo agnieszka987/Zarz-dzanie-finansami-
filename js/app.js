@@ -97,7 +97,7 @@ MyApp.controller("page0Controller", function ($scope) {
     $scope.title = "page0Controller";
 });
 
-MyApp.controller("loginController", function ($scope, $http) {
+MyApp.controller("loginController", function ($scope, $http, $location) {
     $scope.title = "loginController";
 
       $scope.zaloguj = function() {
@@ -110,6 +110,8 @@ MyApp.controller("loginController", function ($scope, $http) {
    			 	console.log(response.data.records.length);
    			 	if (response.data.records.length == 1) {
    			 		alert("Poprawne dane!");
+   			 		$location.path('/groups');
+
    			 	} else {
    			 		alert("Błędne hasło lub login");
    			 	}
@@ -143,6 +145,7 @@ MyApp.controller("signupController", function ($scope, $http) {
    			 		$scope.surname = "";
    			 		$scope.password = "";
    			 		$scope.email = "";
+   			 		$location.path('/groups');
    			 	} else {
    			 		alert("Ups, coś poszło nie tak..");
    			 	}
