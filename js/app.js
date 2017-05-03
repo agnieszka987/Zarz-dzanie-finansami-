@@ -96,7 +96,9 @@ MyApp.controller("loginController", function ($scope, $http) {
     $scope.title = "loginController";
 
       $scope.zaloguj = function() {
-    	 $http.push('js/login.php').then(successCallback, errorCallback);
+
+      //	console.log('Login: ' + $scope.login + " hasło: " + $scope.password);
+    /*	 $http.push('js/login.php').then(successCallback, errorCallback);
 
 			function successCallback(response){
 			    alert("Zalogowano!");
@@ -105,8 +107,30 @@ MyApp.controller("loginController", function ($scope, $http) {
 			}
 			function errorCallback(error){
 			    console.log("blad");
-			}
-		}
+			} */
+			console.log('Login: ' + $scope.login + " hasło: " + $scope.password);
+			var user_data='user_login=' +$scope.login+'&user_haslo='+$scope.password;
+ 
+			$http({
+				method: 'POST',
+				url: 'login.php',
+				data: user_data,
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+			})
+			.success(function(data) {
+       		 console.log(data);
+				if ( data.trim() === 'correct') {
+					console.log('correct');
+				} else {
+					console.log('correct');
+					//$scope.errorMsg = "Invalid Email and Password";
+				}
+			})
+
+
+
+
+		} 
 });
 
 MyApp.controller("groupsNewController", function ($scope) {
