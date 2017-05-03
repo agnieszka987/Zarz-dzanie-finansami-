@@ -9,7 +9,7 @@ $password = $data->password;
 
 $conn = new mysqli("10.254.94.2", "s173529", "Parkowa3", "s173529");
 
-$result = $conn->query("SELECT login, haslo FROM Uzytkownicy WHERE login = '$data->username' AND haslo = '$data->password'");
+$result = $conn->query("INSERT INTO Uzytkownicy() VALUES('$data->username',)");
 
 $outp = "";
 
@@ -23,5 +23,5 @@ $outp ='{"records":['.$outp.']}';
 $conn->close();
 
 echo($outp); 
-//echo($data);
+//echo($data); json_encode($data)
 ?>
