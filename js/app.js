@@ -127,7 +127,7 @@ MyApp.controller("page1Controller", function ($scope) {
     $scope.title = "page1Controller";
 });
 
-MyApp.controller("signupController", function ($scope, $http) {
+MyApp.controller("signupController", function ($scope, $http, $location) {
     $scope.title = "signupController";
     $scope.dodajUzytkownika = function() {
 
