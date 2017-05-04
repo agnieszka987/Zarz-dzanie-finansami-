@@ -1,4 +1,4 @@
-var MyApp = angular.module("MyApp", ['ui.router','ui.bootstrap']);
+var MyApp = angular.module("MyApp", ['ui.router','ui.bootstrap', 'ngCookies']);
 
 MyApp.config(['$qProvider', function ($qProvider) {
     $qProvider.errorOnUnhandledRejections(false);
@@ -97,7 +97,7 @@ MyApp.controller("page0Controller", function ($scope) {
     $scope.title = "page0Controller";
 });
 
-MyApp.controller("loginController", function ($scope, $http, $location) {
+MyApp.controller("loginController", function ($scope, $http, $location, $cookies) {
     $scope.title = "loginController";
 
       $scope.zaloguj = function() {
@@ -110,6 +110,7 @@ MyApp.controller("loginController", function ($scope, $http, $location) {
    			 	console.log(response.data.records.length);
    			 	if (response.data.records.length == 1) {
    			 		alert("Poprawne dane!");
+   			 		$cookies.put('login', $scope.login);
    			 		$location.path('/groups');
 
    			 	} else {
@@ -153,10 +154,10 @@ MyApp.controller("signupController", function ($scope, $http, $location) {
     }
 });
 
-MyApp.controller("groupsController", function ($scope, $uibModal) {
+MyApp.controller("groupsController", function ($scope, $uibModal, $cookies) {
     $scope.title = "groupsController";
     $scope.modalNew = function () {
-		console.log('opening pop up');
+		console.log($cookies.get('login'));
 		var uibModalInstance = $uibModal.open({
 		templateUrl: 'templates/groups-new.html',
 		scope: $scope,
