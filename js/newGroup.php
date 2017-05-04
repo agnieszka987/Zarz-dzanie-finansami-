@@ -7,9 +7,9 @@ $data = json_decode(file_get_contents("php://input"));
 
 $conn = new mysqli("10.254.94.2", "s173529", "Parkowa3", "s173529");
 
-$result = $conn->query("INSERT INTO Grupy (login, haslo) VALUES('$data->login','$data->haslo')");
+$result = $conn->query("INSERT INTO Grupy (login, haslo) VALUES('$data->login','$data->password')");
 
-$result1 = $conn->query("SELECT id_grupy FROM Grupy WHERE login = '$data->login' AND haslo = '$data->haslo'");
+$result1 = $conn->query("SELECT id_grupy FROM Grupy WHERE login = '$data->login' AND haslo = '$data->password'");
 
 $outp = "";
 

@@ -110,8 +110,19 @@ MyApp.controller("page0Controller", function ($scope) {
     $scope.title = "page0Controller";
 });
 
-MyApp.controller("moneyController", function ($scope, $cookies) {
+MyApp.controller("moneyController", function ($scope, $cookies, $http) {
     $scope.title = "moneyController";
+    console.log($cookies.get('id_grupy'));
+
+    var parameterShopping = JSON.stringify({type:"shopping", id_grupy:$cookies.get('id_grupy')});
+
+    $http.post("./js/zakupy.php", parameterShopping)
+
+   	.then(function (response) {
+   		console.log(response.data.records);
+   		var zakupyObj = response.data.records;
+   		$scope.zakupy = zakupyObj;
+   	});
 });
 
 MyApp.controller("loginController", function ($scope, $http, $location, $cookies) {
@@ -128,7 +139,14 @@ MyApp.controller("loginController", function ($scope, $http, $location, $cookies
    			 	if (response.data.records.length == 1) {
    			 		alert("Poprawne dane!");
    			 		$cookies.put('login', $scope.login);
-   			 		$location.path('/groups');
+   			 		console.log(response.data.records[0].id_grupy);
+
+   			 		if(response.data.records[0].id_grupy !== "") {
+   			 			$location.path('/money');
+   			 			$cookies.put('id_grupy', response.data.records[0].id_grupy);
+   			 		} else if (response.data.records[0].id_grupy == "") {
+   			 			$location.path('/groups');
+   			 		}
 
    			 	} else {
    			 		alert("Błędne hasło lub login");
@@ -166,12 +184,12 @@ MyApp.controller("signupController", function ($scope, $http, $location, $cookie
    			 	console.log(response.data);
    			 	if (response.data == true) {
    			 		alert("Dodano użytkwonika!");
+   			 		$cookies.put('login', $scope.login);
    			 		$scope.login = "";
    			 		$scope.name = "";
    			 		$scope.surname = "";
    			 		$scope.password = "";
    			 		$scope.email = "";
-   			 		$cookies.put('login', $scope.login);
    			 		$location.path('/groups');
    			 	} else {
    			 		alert("Ups, coś poszło nie tak..");
@@ -191,7 +209,7 @@ MyApp.controller("groupsController", function ($scope, $uibModal, $cookies, $htt
 
 		$scope.dodajGrupe = function() {
 		    var parameterNewGroup = JSON.stringify({type:"user", login:this.name, password:this.password, username:user});
-
+		    console.log("hasło " + this.password);
 		    if(this.password2 === this.password) {
 		    	$http.post("./js/newGroup.php", parameterNewGroup)
 
@@ -202,6 +220,7 @@ MyApp.controller("groupsController", function ($scope, $uibModal, $cookies, $htt
 
 	   			 	if (responseObj.resultInsGr == true) {
 	   			 		alert("Dodano grupę!");
+	   			 		$cookies.put('id_grupy',responseObj.records[0].id_grupy)
 	   			 		$location.path('/money');
 	   			 	} else {
 	   			 		alert("Ups, coś poszło nie tak..");
@@ -249,10 +268,17 @@ MyApp.controller("groupsController", function ($scope, $uibModal, $cookies, $htt
 
 });
 
-MyApp.controller("navbarController", function ($scope, $cookies) {
+MyApp.controller("navbarController", function ($scope, $cookies, $location) {
     $scope.title = "navbarController";
     var username = $cookies.get('login');
+    
     $scope.username = username;
+    $scope.logout = function() {
+    	$cookies.put('login', "");
+    	$cookies.put('id_grupy', "");
+    	$location.path('/login');
+    //	$route.reload();
+    }
 });
 
 

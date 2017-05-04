@@ -9,7 +9,7 @@ $password = $data->password;
 
 $conn = new mysqli("10.254.94.2", "s173529", "Parkowa3", "s173529");
 
-$result = $conn->query("SELECT login, haslo FROM Uzytkownicy WHERE login = '$data->username' AND haslo = '$data->password'");
+$result = $conn->query("SELECT id_grupy, login, haslo FROM Uzytkownicy WHERE login = '$data->username' AND haslo = '$data->password'");
 
 $outp = "";
 
@@ -17,7 +17,8 @@ $outp = "";
 while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
     if ($outp != "") {$outp .= ",";}
     $outp .= '{"login":"'  . $rs["login"] . '",';
-    $outp .= '"haslo":"'. $rs["haslo"]     . '"}';
+    $outp .= '"haslo":"'. $rs["haslo"]     . '",';
+    $outp .= '"id_grupy":"'. $rs["id_grupy"]     . '"}';
 }
 $outp ='{"records":['.$outp.']}';
 $conn->close();
