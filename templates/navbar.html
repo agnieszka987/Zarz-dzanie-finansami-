@@ -1,8 +1,6 @@
 
 
 <div id="navbarPage">
-	{{title}}
-
 	<div class="container" id="navbar">
 		<nav class="navbar navbar-default">
 		  <div class="container-fluid">
@@ -11,8 +9,12 @@
 		    </div>
 		    <ul class="nav navbar-nav">
 		      <li class="active"><a ui-sref="home">Home</a></li>
-		      <li><a ui-sref="page1">Page 1</a></li>
+		      <li><a ui-sref="money">Tableka</a></li>
 		      <li><a ui-sref="login">Login</a></li>
+		    </ul>
+		    <ul class="nav navbar-nav navbar-right">
+		    	<li><a ng-model="username">Użytkownik: {{username}}</a></li>
+		    	<li><a id="logout" ui-sref="logout">Wyloguj</a></li>
 		    </ul>
 		  </div>
 		</nav>

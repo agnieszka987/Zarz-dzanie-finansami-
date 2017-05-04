@@ -73,6 +73,19 @@ MyApp.config(function($stateProvider, $urlRouterProvider){
 			}
 		}
 	})
+	.state('money', {
+		url: "/money",
+		views: {
+			'header': {
+			templateUrl: "templates/navbar.html",
+			controller: 'navbarController'	
+			},
+			'content': {
+			templateUrl: "templates/money.html",
+			controller: 'moneyController'
+			}
+		}
+	})
 /*	.state('groupsNew', {
 		url: "/groupsNew",
 		views: {
@@ -95,6 +108,10 @@ MyApp.config(function($stateProvider, $urlRouterProvider){
 
 MyApp.controller("page0Controller", function ($scope) {
     $scope.title = "page0Controller";
+});
+
+MyApp.controller("moneyController", function ($scope, $cookies) {
+    $scope.title = "moneyController";
 });
 
 MyApp.controller("loginController", function ($scope, $http, $location, $cookies) {
@@ -135,7 +152,7 @@ MyApp.controller("page1Controller", function ($scope) {
     $scope.title = "page1Controller";
 });
 
-MyApp.controller("signupController", function ($scope, $http, $location) {
+MyApp.controller("signupController", function ($scope, $http, $location, $cookies) {
     $scope.title = "signupController";
     $scope.dodajUzytkownika = function() {
 
@@ -145,6 +162,7 @@ MyApp.controller("signupController", function ($scope, $http, $location) {
     	$http.post("./js/newUser.php", parameterUser)
 
    			 .then(function (response) {
+
    			 	console.log(response.data);
    			 	if (response.data == true) {
    			 		alert("Dodano użytkwonika!");
@@ -153,6 +171,7 @@ MyApp.controller("signupController", function ($scope, $http, $location) {
    			 		$scope.surname = "";
    			 		$scope.password = "";
    			 		$scope.email = "";
+   			 		$cookies.put('login', $scope.login);
    			 		$location.path('/groups');
    			 	} else {
    			 		alert("Ups, coś poszło nie tak..");
@@ -161,26 +180,29 @@ MyApp.controller("signupController", function ($scope, $http, $location) {
     }
 });
 
-MyApp.controller("groupsController", function ($scope, $uibModal, $cookies, $http) {
+MyApp.controller("groupsController", function ($scope, $uibModal, $cookies, $http, $location) {
     $scope.title = "groupsController";
+    var user = $cookies.get('login');
     $scope.modalNew = function () {
-		var user = $cookies.get('login');
 		var uibModalInstance = $uibModal.open({
 		templateUrl: 'templates/groups-new.html',
 		scope: $scope,
 		});
 
 		$scope.dodajGrupe = function() {
-		    var parameterNewGroup = JSON.stringify({type:"user", login:this.name, password:this.password});
+		    var parameterNewGroup = JSON.stringify({type:"user", login:this.name, password:this.password, username:user});
 
 		    if(this.password2 === this.password) {
 		    	$http.post("./js/newGroup.php", parameterNewGroup)
 
 	   			 .then(function (response) {
-	   			 	console.log(response.data);
-	   			 	if (response.data == true) {
+	   			 	
+	   			 	var responseObj = JSON.parse(response.data);
+	   			 	console.log(responseObj);
+
+	   			 	if (responseObj.resultInsGr == true) {
 	   			 		alert("Dodano grupę!");
-	   			 	//	$location.path('/groups');
+	   			 		$location.path('/money');
 	   			 	} else {
 	   			 		alert("Ups, coś poszło nie tak..");
 	   			 	}
@@ -200,20 +222,37 @@ MyApp.controller("groupsController", function ($scope, $uibModal, $cookies, $htt
 
 		$http.get("./js/groups.php")
 	   		.then(function (response) {
-	   			console.log(response.data.records);
-	   			if (response.data) {
-	   			 	console.log(response.data);
-	   			 	//	$location.path('/groups');
-	   			} else {
-	   			 	alert("Ups, coś poszło nie tak..");
+	   			$scope.groupsName = response.data.records;
+	   			
+	   			$scope.dodaj = function() {
+	   				console.log(this.selectedGroup);
+
+	   				var parameterJoinGroup = JSON.stringify({type:"user", groupName:this.selectedGroup, 
+	   				password:this.password, username:user});
+
+	   				$http.post("./js/joinGroup.php", parameterJoinGroup)
+
+	   			 		.then(function (response) {
+	   			 			console.log(response);
+			   			 	if (response.data == 1) {
+			   			 		alert("Dodano grupę!");
+			   			 		$location.path('/money');
+			   			 	} else if (response.data == ""){
+			   			 		alert("Błędne hasło.");
+			   			 	}
+		   			 });
+
 	   			}
+
 	   		});
 	};
 
 });
 
-MyApp.controller("navbarController", function ($scope) {
+MyApp.controller("navbarController", function ($scope, $cookies) {
     $scope.title = "navbarController";
+    var username = $cookies.get('login');
+    $scope.username = username;
 });
 
 
