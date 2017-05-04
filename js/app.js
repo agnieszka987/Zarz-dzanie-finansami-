@@ -104,9 +104,9 @@ MyApp.controller("loginController", function ($scope, $http, $location, $cookies
 
       	var parameter = JSON.stringify({type:"user", username:$scope.login, password:$scope.password});
 
-  			  $http.post("./js/login.php", parameter)
+  			$http.post("./js/login.php", parameter)
 
-   			 .then(function (response) {
+   			.then(function (response) {
    			 	console.log(response.data.records.length);
    			 	if (response.data.records.length == 1) {
    			 		alert("Poprawne dane!");
@@ -120,8 +120,15 @@ MyApp.controller("loginController", function ($scope, $http, $location, $cookies
 		} 
 });
 
-MyApp.controller("groupsNewController", function ($scope) {
+MyApp.controller("groupsNewController", function ($scope, $uibModalInstance) {
     $scope.title = "groupsNewController";
+
+    $scope.dodajGrupe = function(){
+
+
+
+	}
+
 });
 
 MyApp.controller("page1Controller", function ($scope) {
@@ -154,25 +161,53 @@ MyApp.controller("signupController", function ($scope, $http, $location) {
     }
 });
 
-MyApp.controller("groupsController", function ($scope, $uibModal, $cookies) {
+MyApp.controller("groupsController", function ($scope, $uibModal, $cookies, $http) {
     $scope.title = "groupsController";
     $scope.modalNew = function () {
-		console.log($cookies.get('login'));
+		var user = $cookies.get('login');
 		var uibModalInstance = $uibModal.open({
 		templateUrl: 'templates/groups-new.html',
 		scope: $scope,
 		});
 
 		$scope.dodajGrupe = function() {
-		console.log("dodaj");
-	}
+		    var parameterNewGroup = JSON.stringify({type:"user", login:this.name, password:this.password});
+
+		    if(this.password2 === this.password) {
+		    	$http.post("./js/newGroup.php", parameterNewGroup)
+
+	   			 .then(function (response) {
+	   			 	console.log(response.data);
+	   			 	if (response.data == true) {
+	   			 		alert("Dodano grupę!");
+	   			 	//	$location.path('/groups');
+	   			 	} else {
+	   			 		alert("Ups, coś poszło nie tak..");
+	   			 	}
+	   			 });
+		    } else {
+		    	alert("Podane hasła są różne");
+		    }
+		}
 
 	};
 	$scope.modalJoin = function () {
 		console.log('opening pop up');
 		var uibModalInstanceJoin = $uibModal.open({
 		templateUrl: 'templates/groups-join.html',
+		scope: $scope,
 		});
+
+		$http.get("./js/groups.php")
+	   		.then(function (response) {
+	   			console.log(response.data.records);
+	   			if (response.data) {
+	   			 	console.log(response.data);
+	   			 	//	$location.path('/groups');
+	   			} else {
+	   			 	alert("Ups, coś poszło nie tak..");
+	   			}
+	   		});
 	};
 
 });
