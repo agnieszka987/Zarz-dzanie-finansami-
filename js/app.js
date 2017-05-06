@@ -145,11 +145,12 @@ MyApp.controller("dutiesController", function ($scope) {
     // ilość tygodni w miesiącu
     var firstOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
     var lastOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-    var numberOfDaysInMonth = lastOfMonth.getDate();
-    var firstWeekDay = (firstOfMonth.getDay() + 6) % 7;
-    var used = firstWeekDay + numberOfDaysInMonth;
-    
-    var numberOfWeeks = Math.ceil(used / 7);
+
+    var firstWeek = moment(firstOfMonth).format('W');
+    var lastWeek = moment(lastOfMonth).format('W');
+    var numberOfWeeks = lastWeek - firstWeek + 1;
+    if (numberOfWeeks < 0) { firstWeek = 0; }
+    numberOfWeeks = lastWeek - firstWeek + 1;
     console.log("tygodni w miesiącu: " + numberOfWeeks);
     
     var arr = [];
