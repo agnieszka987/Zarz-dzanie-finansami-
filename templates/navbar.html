@@ -9,10 +9,11 @@
 		    </div>
 		    <ul class="nav navbar-nav">
 		      <li class="active"><a ui-sref="home">Home</a></li>
-		      <li><a ui-sref="money">Tableka</a></li>
+		      <li><a ui-sref="money">Zakupy</a></li>
 		      <li><a ui-sref="login">Login</a></li>
 		    </ul>
 		    <ul class="nav navbar-nav navbar-right">
+		    	<li><a ng-model="groupName">Grupa: {{groupName}}</a></li>
 		    	<li><a ng-model="username">Użytkownik: {{username}}</a></li>
 		    	<li><a id="logout" ng-click="logout()">Wyloguj</a></li>
 		    </ul>
