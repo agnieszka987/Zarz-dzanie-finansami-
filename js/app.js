@@ -1,109 +1,122 @@
-var MyApp = angular.module("MyApp", ['ui.router','ui.bootstrap', 'ngCookies']);
+var MyApp = angular.module("MyApp", ['ui.router', 'ui.bootstrap', 'ngCookies']);
 
 MyApp.config(['$qProvider', function ($qProvider) {
     $qProvider.errorOnUnhandledRejections(false);
 }]);
 
 
-MyApp.config(function($stateProvider, $urlRouterProvider){
+MyApp.config(function ($stateProvider, $urlRouterProvider) {
 	$stateProvider
-	.state('main', {
-		url: "",
-		views: {
-			'header': {
-			templateUrl: "templates/navbar.html",
-			controller: 'navbarController'	
-			},
-			'content': {
-			templateUrl: "main.html",
-			controller: 'page1Controller'
-			}
-		}
-	})
-	.state('home', {
-		url: "/home",
-		views: {
-			'header': {
-			templateUrl: "templates/navbar.html",
-			controller: 'navbarController'	
-			},
-			'content': {
-			templateUrl: "templates/page0.html",
-			controller: 'page0Controller'
-			}
-		}
-	})
-	.state('page1', {
-		url: "/page1",
-		views: {
-			'header': {
-			templateUrl: "templates/navbar.html",
-			controller: 'navbarController'	
-			},
-			'content': {
-			templateUrl: "templates/page1.html",
-			controller: 'page1Controller'
-			}
-		}
-	})
-	.state('login', {
-		url: "/login",
-		views: {
-			'header': {
-			templateUrl: "templates/login.html",
-			controller: 'loginController'
-			}
-		}
-	})
-	.state('signup', {
-		views: {
-			'header': {
-		url: "/signup",
-		templateUrl: "templates/signup.html",
-		controller: 'signupController'
-			}
-		}
-	})
-	.state('groups', {
-		url: "/groups",
-		views: {
-			'header': {
-			templateUrl: "templates/groups.html",
-			controller: 'groupsController'
-			}
-		}
-	})
-	.state('money', {
-		url: "/money",
-		views: {
-			'header': {
-			templateUrl: "templates/navbar.html",
-			controller: 'navbarController'	
-			},
-			'content': {
-			templateUrl: "templates/money.html",
-			controller: 'moneyController'
-			}
-		}
-	})
-/*	.state('groupsNew', {
-		url: "/groupsNew",
-		views: {
-			'header': {
-			templateUrl: "groups-new.html",
-			controller: 'groupsNewController'
-			}
-		}
-	}) */
-	.state('/', {
-		url: "/home", 
-		views: {
-			'header': {
-			templateUrl: "templates/login.html",
-			controller: 'loginController'
-			}	
-		}
-	});
+        .state('main', {
+            url: "",
+            views: {
+                'header': {
+                    templateUrl: "templates/navbar.html",
+                    controller: 'navbarController'
+                },
+                'content': {
+                    templateUrl: "main.html",
+                    controller: 'page1Controller'
+                }
+            }
+        })
+        .state('home', {
+            url: "/home",
+            views: {
+                'header': {
+                    templateUrl: "templates/navbar.html",
+                    controller: 'navbarController'
+                },
+                'content': {
+                    templateUrl: "templates/page0.html",
+                    controller: 'page0Controller'
+                }
+            }
+        })
+        .state('page1', {
+            url: "/page1",
+            views: {
+                'header': {
+                    templateUrl: "templates/navbar.html",
+                    controller: 'navbarController'
+                },
+                'content': {
+                    templateUrl: "templates/page1.html",
+                    controller: 'page1Controller'
+                }
+            }
+        })
+        .state('login', {
+            url: "/login",
+            views: {
+                'header': {
+                    templateUrl: "templates/login.html",
+                    controller: 'loginController'
+                }
+            }
+        })
+        .state('signup', {
+            views: {
+                'header': {
+                    url: "/signup",
+                    templateUrl: "templates/signup.html",
+                    controller: 'signupController'
+                }
+            }
+        })
+        .state('groups', {
+            url: "/groups",
+            views: {
+                'header': {
+                    templateUrl: "templates/groups.html",
+                    controller: 'groupsController'
+                }
+            }
+        })
+        .state('money', {
+            url: "/money",
+            views: {
+                'header': {
+                    templateUrl: "templates/navbar.html",
+                    controller: 'navbarController'
+                },
+                'content': {
+                    templateUrl: "templates/money.html",
+                    controller: 'moneyController'
+                }
+            }
+        })
+        .state('duties', {
+            url: "/duties",
+            views: {
+                'header': {
+                    templateUrl: "templates/navbar.html",
+                    controller: 'navbarController'
+                },
+                'content': {
+                    templateUrl: "templates/duties.html",
+                    controller: 'dutiesController'
+                }
+            }
+        })
+    /*	.state('groupsNew', {
+            url: "/groupsNew",
+            views: {
+                'header': {
+                    templateUrl: "groups-new.html",
+                    controller: 'groupsNewController'
+                }
+            }
+        }) */
+        .state('/', {
+            url: "/home",
+            views: {
+                'header': {
+                    templateUrl: "templates/login.html",
+                    controller: 'loginController'
+                }
+            }
+        });
 });
 
 MyApp.controller("page0Controller", function ($scope) {
@@ -114,55 +127,78 @@ MyApp.controller("moneyController", function ($scope, $cookies, $http) {
     $scope.title = "moneyController";
     console.log($cookies.get('id_grupy'));
 
-    var parameterShopping = JSON.stringify({type:"shopping", id_grupy:$cookies.get('id_grupy')});
+    var parameterShopping = JSON.stringify({type: "shopping", id_grupy: $cookies.get('id_grupy')});
 
     $http.post("./js/zakupy.php", parameterShopping)
+        .then(function (response) {
+            console.log(response.data.records);
+            var zakupyObj = response.data.records;
+            $scope.zakupy = zakupyObj;
+        });
+});
 
-   	.then(function (response) {
-   		console.log(response.data.records);
-   		var zakupyObj = response.data.records;
-   		$scope.zakupy = zakupyObj;
-   	});
+MyApp.controller("dutiesController", function ($scope) {
+    $scope.title = "dutiesController";
+    
+    var date = new Date();
+    
+    // ilość tygodni w miesiącu
+    var firstOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+    var lastOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    var numberOfDaysInMonth = lastOfMonth.getDate();
+    var firstWeekDay = (firstOfMonth.getDay() + 6) % 7;
+    var used = firstWeekDay + numberOfDaysInMonth;
+    
+    var numberOfWeeks = Math.ceil(used / 7);
+    console.log("tygodni w miesiącu: " + numberOfWeeks);
+    
+    var arr = [];
+    for (var i = 0; i < numberOfWeeks; i++) {
+        arr.push({ title: 'Tydzień ' + (i + 1), content: 'Tydzień ' + (i + 1) });
+    };
+    
+    $scope.tabs = arr;
+    console.log($scope.tabs);
+    
 });
 
 MyApp.controller("loginController", function ($scope, $http, $location, $cookies) {
     $scope.title = "loginController";
 
-      $scope.zaloguj = function() {
+    $scope.zaloguj = function () {
 
-      	var parameter = JSON.stringify({type:"user", username:$scope.login, password:$scope.password});
+        var parameter = JSON.stringify({type: "user", username: $scope.login, password: $scope.password});
 
-  			$http.post("./js/login.php", parameter)
+            $http.post("./js/login.php", parameter)
+                .then(function (response) {
+                    console.log(response.data.records.length);
+                    if (response.data.records.length === 1) {
+                        alert("Poprawne dane!");
+                        $cookies.put('login', $scope.login);
+                        console.log(response.data.records[0].id_grupy);
 
-   			.then(function (response) {
-   			 	console.log(response.data.records.length);
-   			 	if (response.data.records.length == 1) {
-   			 		alert("Poprawne dane!");
-   			 		$cookies.put('login', $scope.login);
-   			 		console.log(response.data.records[0].id_grupy);
+                        if (response.data.records[0].id_grupy !== "") {
+                            $location.path('/money');
+                            $cookies.put('id_grupy', response.data.records[0].id_grupy);
+                        } else if (response.data.records[0].id_grupy === "") {
+                            $location.path('/groups');
+                        }
 
-   			 		if(response.data.records[0].id_grupy !== "") {
-   			 			$location.path('/money');
-   			 			$cookies.put('id_grupy', response.data.records[0].id_grupy);
-   			 		} else if (response.data.records[0].id_grupy == "") {
-   			 			$location.path('/groups');
-   			 		}
-
-   			 	} else {
-   			 		alert("Błędne hasło lub login");
-   			 	}
-   			 });
-		} 
+                    } else {
+                        alert("Błędne login lub hasło");
+                    }
+                 });
+		};
 });
 
 MyApp.controller("groupsNewController", function ($scope, $uibModalInstance) {
     $scope.title = "groupsNewController";
 
-    $scope.dodajGrupe = function(){
+    $scope.dodajGrupe = function () {
 
 
 
-	}
+	};
 
 });
 
@@ -172,30 +208,29 @@ MyApp.controller("page1Controller", function ($scope) {
 
 MyApp.controller("signupController", function ($scope, $http, $location, $cookies) {
     $scope.title = "signupController";
-    $scope.dodajUzytkownika = function() {
+    $scope.dodajUzytkownika = function () {
 
-    	var parameterUser = JSON.stringify({type:"user", username:$scope.login, password:$scope.password, 
-    	name:$scope.name, email:$scope.email, surname:$scope.surname});
+        var parameterUser = JSON.stringify({type: "user", username: $scope.login, password: $scope.password,
+                                            name: $scope.name, email: $scope.email, surname: $scope.surname});
 
-    	$http.post("./js/newUser.php", parameterUser)
+        $http.post("./js/newUser.php", parameterUser)
+            .then(function (response) {
 
-   			 .then(function (response) {
-
-   			 	console.log(response.data);
-   			 	if (response.data == true) {
-   			 		alert("Dodano użytkwonika!");
-   			 		$cookies.put('login', $scope.login);
-   			 		$scope.login = "";
-   			 		$scope.name = "";
-   			 		$scope.surname = "";
-   			 		$scope.password = "";
-   			 		$scope.email = "";
-   			 		$location.path('/groups');
-   			 	} else {
-   			 		alert("Ups, coś poszło nie tak..");
-   			 	}
-   			 });
-    }
+                console.log(response.data);
+                if (response.data === true) {
+                    alert("Dodano użytkownika!");
+                    $cookies.put('login', $scope.login);
+                    $scope.login = "";
+                    $scope.name = "";
+                    $scope.surname = "";
+                    $scope.password = "";
+                    $scope.email = "";
+                    $location.path('/groups');
+                } else {
+                    alert("Ups, coś poszło nie tak..");
+                }
+            });
+    };
 });
 
 MyApp.controller("groupsController", function ($scope, $uibModal, $cookies, $http, $location) {
@@ -203,63 +238,63 @@ MyApp.controller("groupsController", function ($scope, $uibModal, $cookies, $htt
     var user = $cookies.get('login');
     $scope.modalNew = function () {
 		var uibModalInstance = $uibModal.open({
-		templateUrl: 'templates/groups-new.html',
-		scope: $scope,
+            templateUrl: 'templates/groups-new.html',
+            scope: $scope
 		});
 
-		$scope.dodajGrupe = function() {
-		    var parameterNewGroup = JSON.stringify({type:"user", login:this.name, password:this.password, username:user});
+		$scope.dodajGrupe = function () {
+		    var parameterNewGroup = JSON.stringify({type: "user", login: this.name, password: this.password, username: user});
 		    console.log("hasło " + this.password);
-		    if(this.password2 === this.password) {
-		    	$http.post("./js/newGroup.php", parameterNewGroup)
-
-	   			 .then(function (response) {
+		    
+            if (this.password2 === this.password) {
+		    	
+                $http.post("./js/newGroup.php", parameterNewGroup)
+                    .then(function (response) {
 	   			 	
-	   			 	var responseObj = JSON.parse(response.data);
-	   			 	console.log(responseObj);
+                        var responseObj = JSON.parse(response.data);
+                        console.log(responseObj);
 
-	   			 	if (responseObj.resultInsGr == true) {
-	   			 		alert("Dodano grupę!");
-	   			 		$cookies.put('id_grupy',responseObj.records[0].id_grupy)
-	   			 		$location.path('/money');
-	   			 	} else {
-	   			 		alert("Ups, coś poszło nie tak..");
-	   			 	}
-	   			 });
+                        if (responseObj.resultInsGr === true) {
+                            alert("Dodano grupę!");
+                            $cookies.put('id_grupy', responseObj.records[0].id_grupy);
+                            $location.path('/money');
+                        } else {
+                            alert("Ups, coś poszło nie tak..");
+                        }
+                    });
 		    } else {
-		    	alert("Podane hasła są różne");
+                alert("Podane hasła są różne");
 		    }
-		}
+		};
 
 	};
 	$scope.modalJoin = function () {
 		console.log('opening pop up');
 		var uibModalInstanceJoin = $uibModal.open({
-		templateUrl: 'templates/groups-join.html',
-		scope: $scope,
+            templateUrl: 'templates/groups-join.html',
+            scope: $scope
 		});
 
 		$http.get("./js/groups.php")
-	   		.then(function (response) {
-	   			$scope.groupsName = response.data.records;
+            .then(function (response) {
+                $scope.groupsName = response.data.records;
 	   			
-	   			$scope.dodaj = function() {
-	   				console.log(this.selectedGroup);
+                $scope.dodaj = function () {
+                    console.log(this.selectedGroup);
 
-	   				var parameterJoinGroup = JSON.stringify({type:"user", groupName:this.selectedGroup, 
-	   				password:this.password, username:user});
+                    var parameterJoinGroup = JSON.stringify({type: "user", groupName: this.selectedGroup,
+                                                             password: this.password, username: user});
 
-	   				$http.post("./js/joinGroup.php", parameterJoinGroup)
-
-	   			 		.then(function (response) {
-	   			 			console.log(response);
-			   			 	if (response.data == 1) {
-			   			 		alert("Dodano grupę!");
-			   			 		$location.path('/money');
-			   			 	} else if (response.data == ""){
-			   			 		alert("Błędne hasło.");
-			   			 	}
-		   			 });
+                    $http.post("./js/joinGroup.php", parameterJoinGroup)
+                        .then(function (response) {
+                            console.log(response);
+                            if (response.data === 1) {
+                                alert("Dodano grupę!");
+                                $location.path('/money');
+                            } else if (response.data === "") {
+                                alert("Błędne hasło.");
+                            }
+                    });
 
 	   			}
 

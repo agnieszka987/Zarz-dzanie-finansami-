@@ -1,0 +1,42 @@
+<h1>Obowiązki</h1>
+
+<div>
+	<p>Tutaj będzie tabelka!</p>
+</div>
+<div class="container">
+	<p></p>
+
+	<div class="container">
+        
+        <uib-tabset active="active" justified="true">
+            <uib-tab index="$index" ng-repeat="tab in tabs" heading="{{tab.title}}">
+                {{tab.content}}
+            </uib-tab>
+        </uib-tabset>
+        
+        
+<!--
+		<table class=" table table-hover">
+			<tr>
+				<th>Id użytkownika</th>
+				<th>Id grupy</th>
+				<th>Login</th>
+				<th>Grupa</th>
+				<th>Nazwa</th>
+				<th>Cena</th>
+				<th>Data</th>
+			</tr>
+			<tr ng-repeat="x in zakupy track by $index">
+				<td>{{x.id_uzytkownika}}</td>
+				<td>{{x.id_grupy}}</td>
+				<td>{{x.login}}</td>
+				<td>{{x.nazwa_grupy}}</td>
+				<td>{{x.nazwa}}</td>
+				<td>{{x.koszt | currency : "zł" : 2}}</td>
+				<td>{{x.data_zakupu}}</td>
+				<td><i class="fa fa-trash" aria-hidden="true" ng-click="deleteCustomer($index)"></i></td>
+			</tr>
+		</table>
+-->
+	</div>
+</div>
