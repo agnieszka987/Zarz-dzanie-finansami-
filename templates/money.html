@@ -1,32 +1,58 @@
-<h1>Zakupy!</h1>
+    <div class="jumbotron" id="jumbotron">
+    	<h2>Zakupy!</h2>
+    </div>
+    <div class="container">
+    	<div class="container">
+    		<button class="btn btn-success" ng-click="slide()">Dodaj</button>    	
+    	<div class="alert alert-success alert-dismissible" id="alertDodano" role="alert">
+      		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      		<strong>Gatuluję!</strong> Zapisano nowe zakupy! :)
+    	</div>
 
-<div>
-	<p>Tutaj będzie tabelka!</p>
-</div>
-<div class="container">
-	<p></p>
+    	<div class="container" id="form">
+    		<button id="js-btn-close-form" type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="hide()"><br/>
+    			<span id="js-close-form" aria-hidden="true">&times;</span>
+    		</button>
 
-	<div class="container">
-		<table class=" table table-hover">
-			<tr>
-				<th>Id użytkownika</th>
-				<th>Id grupy</th>
-				<th>Login</th>
-				<th>Grupa</th>
-				<th>Nazwa</th>
-				<th>Cena</th>
-				<th>Data</th>
-			</tr>
-			<tr ng-repeat="x in zakupy track by $index">
-				<td>{{x.id_uzytkownika}}</td>
-				<td>{{x.id_grupy}}</td>
-				<td>{{x.login}}</td>
-				<td>{{x.nazwa_grupy}}</td>
-				<td>{{x.nazwa}}</td>
-				<td>{{x.koszt | currency : "zł" : 2}}</td>
-				<td>{{x.data_zakupu}}</td>
-				<td><i class="fa fa-trash" aria-hidden="true" ng-click="deleteCustomer($index)"></i></td>
-			</tr>
-		</table>
-	</div>
-</div>
+    		<form name="myForm" id="shoppingForm">
+    			<div class="form-group form-inline">
+    				<label for="name">Produkt:</label>
+    				<input type="text" id="name" class="form-control" ng-model="shoppingProduct">
+    			</div>
+    			<div class="form-group form-inline">
+    				<label for="suranme">Cena: </label>
+    				<input type="text" id="surname" class="form-control" ng-model="shoppingPrice">
+    			</div>
+    			<div class="form-group form-inline">
+    				<label for="age">Data: </label>
+    				<input type="text" id="age" class="form-control" ng-model="shoppingDate">
+    			</div>
+    			<button class="btn" ng-click="addShopping()">Zapisz</button>
+    		</form>
+    	</div>
+    </div>
+
+    	<div class="container" id="shoppingTable">
+    		<table class="table table-hover">
+    			<tr>
+    				<th>Id użytkownika</th>
+    				<th>Id grupy</th>
+    				<th>Login</th>
+    				<th>Grupa</th>
+    				<th>Nazwa</th>
+    				<th>Cena</th>
+    				<th>Data</th>
+    			</tr>
+    			<tr ng-repeat="x in zakupy | orderBy:myOrderBy track by $index">
+    				<td>{{x.id_uzytkownika}}</td>
+    				<td>{{x.id_grupy}}</td>
+    				<td>{{x.login}}</td>
+    				<td>{{x.nazwa_grupy}}</td>
+    				<td>{{x.nazwa}}</td>
+    				<td>{{x.koszt | currency : "zł" : 2}}</td>
+    				<td>{{x.data_zakupu}}</td>
+    				<td><i class="fa fa-trash" aria-hidden="true" ng-click="deleteCustomer($index)"></i></td>
+    			</tr>
+    		</table>
+    	</div>
+    </div>
