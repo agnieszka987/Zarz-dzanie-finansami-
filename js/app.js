@@ -125,16 +125,48 @@ MyApp.controller("page0Controller", function ($scope) {
 
 MyApp.controller("moneyController", function ($scope, $cookies, $http) {
     $scope.title = "moneyController";
-    console.log($cookies.get('id_grupy'));
+    
+    $scope.orderByMe = function(x) {
+		$scope.myOrderBy = x;
+	}
+
+	function refreshTable() {
+	    $http.post("./js/zakupy.php", parameterShopping)
+	        .then(function (response) {
+	            console.log(response.data.records);
+	            var zakupyObj = response.data.records;
+	            $scope.zakupy = zakupyObj;
+	        });
+    }
 
     var parameterShopping = JSON.stringify({type: "shopping", id_grupy: $cookies.get('id_grupy')});
+    refreshTable();
 
-    $http.post("./js/zakupy.php", parameterShopping)
+    $scope.slide = function() {
+		$("#form").slideDown("slow");
+	};
+
+	$scope.hide = function() { 
+		$("#form").slideUp("slow");
+	};
+
+	$scope.addShopping = function() {
+		alert("dodaj klienta");
+
+		var parameterAddShopping = JSON.stringify({type: "addShopping", id_grupy: $cookies.get('id_grupy'),
+		id_uzytkownika: $cookies.get('id_uzytkownika'), shoppingProduct: $scope.shoppingProduct, 
+		shoppingPrice: $scope.shoppingPrice, shoppingDate: $scope.shoppingDate});
+
+		$http.post("./js/addShopping.php", parameterAddShopping)
         .then(function (response) {
-            console.log(response.data.records);
-            var zakupyObj = response.data.records;
-            $scope.zakupy = zakupyObj;
+            console.log(response.data.records); 
+			$('#alertDodano').show();
+			refreshTable();
+			$scope.shoppingPrice = "";
+			$scope.shoppingDate = "";
+			$scope.shoppingProduct = "";
         });
+	}
 });
 
 MyApp.controller("dutiesController", function ($scope) {
@@ -175,6 +207,7 @@ MyApp.controller("loginController", function ($scope, $http, $location, $cookies
                     if (response.data.records.length === 1) {
                         alert("Poprawne dane!");
                         $cookies.put('login', $scope.login);
+                        $cookies.put('id_uzytkownika', response.data.records[0].id_uzytkownika);
                         console.log(response.data.records[0].id_grupy);
 
                         if (response.data.records[0].id_grupy !== "") {
@@ -195,9 +228,6 @@ MyApp.controller("groupsNewController", function ($scope, $uibModalInstance) {
     $scope.title = "groupsNewController";
 
     $scope.dodajGrupe = function () {
-
-
-
 	};
 
 });
