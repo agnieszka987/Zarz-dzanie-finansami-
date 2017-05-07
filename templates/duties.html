@@ -1,42 +1,48 @@
-<h1>Obowiązki</h1>
-
-<div>
-	<p>Tutaj będzie tabelka!</p>
+<div class="jumbotron" id="jumbotron">
+	<h2>Obowiązki!</h2>
 </div>
+
 <div class="container">
 	<p></p>
 
-	<div class="container">
-        
+    <div class="container">
+        <button class="btn btn-success" ng-click="slide()">Dodaj nowe zadanie</button>    	
+        <div class="alert alert-success alert-dismissible" id="alertDodano" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Gatuluję!</strong> Zapisano nowe zadanie! :)
+        </div>
+
+        <div class="container" id="form">
+            <button id="js-btn-close-form" type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="hide()"><br/>
+                <span id="js-close-form" aria-hidden="true">&times;</span>
+            </button>
+
+            <form name="myForm" id="dutiesForm">
+                <div class="form-group form-inline">
+                    <label for="name">Czynność:</label>
+                    <input type="text" id="name" class="form-control" ng-model="dutyName">
+                </div>
+                <button class="btn" ng-click="addDuty()">Zapisz</button>
+            </form>
+        </div>
+    </div>
+    <br>
+	<div class="container">      
         <uib-tabset active="active" justified="true">
             <uib-tab index="$index" ng-repeat="tab in tabs" heading="{{tab.title}}">
-                {{tab.content}}
+                <br><h4>{{okresy[$index]}} maja</h4><br>
+                <table class="table table-hover">
+                    <tr>
+                        <th>Grupa</th>
+                        <th>Nazwa</th>
+                    </tr>
+                    <tr ng-repeat="x in duties">
+                        <td>{{tab.content}}</td>
+                        <td>{{x.nazwa}}</td>
+                        <td><i class="fa fa-trash" aria-hidden="true" ng-click="deleteCustomer($index)"></i></td>
+                    </tr>
+                </table>
             </uib-tab>
         </uib-tabset>
-        
-        
-<!--
-		<table class=" table table-hover">
-			<tr>
-				<th>Id użytkownika</th>
-				<th>Id grupy</th>
-				<th>Login</th>
-				<th>Grupa</th>
-				<th>Nazwa</th>
-				<th>Cena</th>
-				<th>Data</th>
-			</tr>
-			<tr ng-repeat="x in zakupy track by $index">
-				<td>{{x.id_uzytkownika}}</td>
-				<td>{{x.id_grupy}}</td>
-				<td>{{x.login}}</td>
-				<td>{{x.nazwa_grupy}}</td>
-				<td>{{x.nazwa}}</td>
-				<td>{{x.koszt | currency : "zł" : 2}}</td>
-				<td>{{x.data_zakupu}}</td>
-				<td><i class="fa fa-trash" aria-hidden="true" ng-click="deleteCustomer($index)"></i></td>
-			</tr>
-		</table>
--->
 	</div>
 </div>

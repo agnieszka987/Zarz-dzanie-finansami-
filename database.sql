@@ -20,7 +20,9 @@ FOREIGN KEY (id_grupy) REFERENCES Grupy(id_grupy)
 CREATE TABLE Zadania_typ (
 id_zadania_typ INT AUTO_INCREMENT,
 nazwa VARCHAR(255) NOT NULL,
-PRIMARY KEY (id_zadania_typ)
+id_grupy INT,
+PRIMARY KEY (id_zadania_typ),
+FOREIGN KEY (id_grupy) REFERENCES Grupy(id_grupy)
 );
 
 CREATE TABLE Zadania (
