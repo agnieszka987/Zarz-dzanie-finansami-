@@ -307,7 +307,6 @@ MyApp.controller("loginController", function ($scope, $http, $location, $cookies
  
                         $cookies.put('login', $scope.login);
                         $cookies.put('id_uzytkownika', response.data.records[0].id_uzytkownika);
-                        console.log(response.data.records[0].id_grupy);
 
                         if (response.data.records[0].id_grupy !== "") {
                             $location.path('/money');

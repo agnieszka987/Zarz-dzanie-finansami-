@@ -135,6 +135,10 @@ MyApp.controller("moneyController", function ($scope, $cookies, $http) {
 	            console.log("Logins " + response.data.records[0].login);
 
 	        });
+<<<<<<< HEAD
+    };
+=======
+>>>>>>> 4d16f457d2e5f1a0c6119fa8f2a64f82b3ec9c6b
 
     refreshTable(parameterShopping);
 
@@ -307,7 +311,6 @@ MyApp.controller("loginController", function ($scope, $http, $location, $cookies
  
                         $cookies.put('login', $scope.login);
                         $cookies.put('id_uzytkownika', response.data.records[0].id_uzytkownika);
-                        console.log(response.data.records[0].id_grupy);
 
                         if (response.data.records[0].id_grupy !== "") {
                             $location.path('/money');

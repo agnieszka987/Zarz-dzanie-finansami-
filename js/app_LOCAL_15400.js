@@ -125,36 +125,22 @@ MyApp.controller("page0Controller", function ($scope) {
 
 MyApp.controller("moneyController", function ($scope, $cookies, $http) {
     $scope.title = "moneyController";
-    var parameterShopping = JSON.stringify({type: "shopping", id_grupy: $cookies.get('id_grupy'),
-     shoppingDateFrom: "", shoppingDateTo: "", login: ""});
-
-    $http.post("./js/getLogins.php", parameterShopping)
-	        .then(function (response) {
-	        	$scope.loginsArray = response.data.records;
-
-	            console.log("Logins " + response.data.records[0].login);
-
-	        });
-
-    refreshTable(parameterShopping);
-
-    $scope.searchShopping = function() {
-
-    	var shoppingDateFrom = toDate($scope.shoppingDateFrom);
-    	var shoppingDateTo = toDate($scope.shoppingDateTo);
-
-    	var parameterShopping = JSON.stringify({type: "shopping", id_grupy: $cookies.get('id_grupy'),
-    	shoppingDateFrom: shoppingDateFrom, shoppingDateTo: shoppingDateTo, login: $scope.selectedLogin});
-
-    	refreshTable(parameterShopping);
-
-   		console.log(shoppingDateFrom + "  " + shoppingDateTo + " " + $scope.selectedLogin);
-
-    }
-   
+    
     $scope.orderByMe = function(x) {
 		$scope.myOrderBy = x;
 	}
+
+	function refreshTable() {
+	    $http.post("./js/zakupy.php", parameterShopping)
+	        .then(function (response) {
+	            console.log(response.data.records);
+	            var zakupyObj = response.data.records;
+	            $scope.zakupy = zakupyObj;
+	        });
+    };
+
+    var parameterShopping = JSON.stringify({type: "shopping", id_grupy: $cookies.get('id_grupy')});
+    refreshTable();
 
     $scope.slide = function() {
 		$("#form").slideDown("slow");
@@ -165,11 +151,11 @@ MyApp.controller("moneyController", function ($scope, $cookies, $http) {
 	};
 
 	$scope.addShopping = function() {
+		alert("dodaj klienta");
 
-		var shoppingDate = toDate($scope.shoppingDate);
 		var parameterAddShopping = JSON.stringify({type: "addShopping", id_grupy: $cookies.get('id_grupy'),
 		                                          id_uzytkownika: $cookies.get('id_uzytkownika'), shoppingProduct: $scope.shoppingProduct, 
-		                                          shoppingPrice: $scope.shoppingPrice, shoppingDate: shoppingDate});
+		                                          shoppingPrice: $scope.shoppingPrice, shoppingDate: $scope.shoppingDate});
 
 		$http.post("./js/addShopping.php", parameterAddShopping)
             .then(function (response) {
@@ -181,22 +167,6 @@ MyApp.controller("moneyController", function ($scope, $cookies, $http) {
                 $scope.shoppingProduct = "";
             });
 	}
-
-	function toDate(date) {
-		return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-	}
-
-	function refreshTable(parameterShopping) {
-		console.log(parameterShopping);
-	    $http.post("./js/zakupy.php", parameterShopping)
-	        .then(function (response) {
-	            console.log(response.data.records);
-	            var zakupyObj = response.data.records;
-	            $scope.zakupy = zakupyObj;
-	        });
-    }
-
-  
 });
 
 MyApp.controller("dutiesController", function ($scope, $cookies, $http) {
@@ -304,7 +274,7 @@ MyApp.controller("loginController", function ($scope, $http, $location, $cookies
                 .then(function (response) {
                     console.log(response.data.records.length);
                     if (response.data.records.length === 1) {
- 
+                        alert("Poprawne dane!");
                         $cookies.put('login', $scope.login);
                         $cookies.put('id_uzytkownika', response.data.records[0].id_uzytkownika);
                         console.log(response.data.records[0].id_grupy);

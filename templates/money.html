@@ -3,7 +3,7 @@
     </div>
     <div class="container">
     	<div class="container">
-    		<button class="btn btn-success" ng-click="slide()">Dodaj</button>    	
+    		<button class="btn btn-success" ng-click="slide()">Dodaj zakupy do listy</button>    	
             <div class="alert alert-success alert-dismissible" id="alertDodano" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Gatuluję!</strong> Zapisano nowe zakupy! :)
@@ -24,12 +24,30 @@
                         <input type="text" id="surname" class="form-control" ng-model="shoppingPrice">
                     </div>
                     <div class="form-group form-inline">
-                        <label for="age">Data: </label>
-                        <input type="text" id="age" class="form-control" ng-model="shoppingDate">
+                        <label for="date">Data: </label>
+                        <input type="date" id="data" class="form-control" ng-model="shoppingDate"></input>
                     </div>
                     <button class="btn" ng-click="addShopping()">Zapisz</button>
                 </form>
             </div>
+        </div>
+
+        <div class="container" id="shoppingFilters">
+            <form class="form-inline">
+                <div class="form-group ">
+                    <label for="dateFrom">Data od:</label>
+                    <input type="date" id="dateFrom" class="form-control" ng-model="shoppingDateFrom">
+                </div>
+                <div class="form-group">
+                    <label for="dateTo">Data do:</label>
+                    <input type="date" id="dateTo" class="form-control" ng-model="shoppingDateTo">
+                </div>
+                 <select ng-model="selectedLogin">
+                    <label for="shoppingLogin">Użytkownik:</label>
+                    <option ng-repeat="x in loginsArray" value="{{x.login}}">{{x.login}}</option>
+                 </select>
+                <button id="searchButton" class="btn" ng-click="searchShopping()">Pokaż</button>
+            </form>
         </div>
 
     	<div class="container" id="shoppingTable">
@@ -39,7 +57,7 @@
     				<th>Id grupy</th>
     				<th>Login</th>
     				<th>Grupa</th>
-    				<th>Nazwa</th>
+    				<th>Produkt</th>
     				<th>Cena</th>
     				<th>Data</th>
     			</tr>
