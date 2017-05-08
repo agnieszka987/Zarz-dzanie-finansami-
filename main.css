@@ -61,7 +61,7 @@
  }
 
  #shoppingTable {
-  padding-top: 20px;
+  padding-top: 10px;
  }
 
 #shoppingForm input {
@@ -75,5 +75,12 @@
 #jumbotron h2 {
   padding-left: 20px;
   margin: 10px;
+}
 
+#shoppingFilters {
+  padding-top: 20px;
+}
+
+#searchButton {
+  margin-bottom: 10px;
 }

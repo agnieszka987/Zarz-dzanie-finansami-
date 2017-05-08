@@ -125,22 +125,19 @@ MyApp.controller("page0Controller", function ($scope) {
 
 MyApp.controller("moneyController", function ($scope, $cookies, $http) {
     $scope.title = "moneyController";
-    
+    var parameterShopping = JSON.stringify({type: "shopping", id_grupy: $cookies.get('id_grupy')});
+
+    refreshTable();
+    getLogin(parameterShopping);
+
+    $scope.searchShopping = function() {
+    	
+   		console.log(toDate($scope.shoppingDateFrom) + "  " + toDate($scope.shoppingDateTo));
+    }
+   
     $scope.orderByMe = function(x) {
 		$scope.myOrderBy = x;
 	}
-
-	function refreshTable() {
-	    $http.post("./js/zakupy.php", parameterShopping)
-	        .then(function (response) {
-	            console.log(response.data.records);
-	            var zakupyObj = response.data.records;
-	            $scope.zakupy = zakupyObj;
-	        });
-    }
-
-    var parameterShopping = JSON.stringify({type: "shopping", id_grupy: $cookies.get('id_grupy')});
-    refreshTable();
 
     $scope.slide = function() {
 		$("#form").slideDown("slow");
@@ -167,6 +164,29 @@ MyApp.controller("moneyController", function ($scope, $cookies, $http) {
                 $scope.shoppingProduct = "";
             });
 	}
+
+	function toDate(date) {
+		return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+	}
+
+	function refreshTable() {
+	    $http.post("./js/zakupy.php", parameterShopping)
+	        .then(function (response) {
+	            console.log(response.data.records);
+	            var zakupyObj = response.data.records;
+	            $scope.zakupy = zakupyObj;
+	        });
+    }
+
+    function getLogin(parameterLogins) {
+    	console.log("tutaj");
+    	$http.post("./js/getLogins.php", parameterLogins)
+	        .then(function (response) {
+	        	var test = JSON.stringify(response.data);
+	            console.log("Logins " + response.data.records.login);
+	            console.log("test " + test);
+	        });
+    }
 });
 
 MyApp.controller("dutiesController", function ($scope, $http) {
@@ -272,10 +292,9 @@ MyApp.controller("loginController", function ($scope, $http, $location, $cookies
                 .then(function (response) {
                     console.log(response.data.records.length);
                     if (response.data.records.length === 1) {
-                        alert("Poprawne dane!");
+ 
                         $cookies.put('login', $scope.login);
                         $cookies.put('id_uzytkownika', response.data.records[0].id_uzytkownika);
-                        console.log(response.data.records[0].id_grupy);
 
                         if (response.data.records[0].id_grupy !== "") {
                             $location.path('/money');
