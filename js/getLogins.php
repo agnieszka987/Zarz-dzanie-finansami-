@@ -6,13 +6,13 @@ $data = json_decode(file_get_contents("php://input"));
 
 $conn = new mysqli("10.254.94.2", "s173529", "Parkowa3", "s173529");
 
-$result = $conn->query("SELECT login, id_uzytkownika FROM Uzytkownicy WHERE id_grupy = '$data->id_grupy' ");
+$result = $conn->query("SELECT login, id_uzytkownika FROM Uzytkownicy WHERE id_grupy = '$data->id_grupy'");
 
 $outp = "";
 while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
     if ($outp != "") {$outp .= ",";}
-    $outp .= '{"id_uzytkownika":"'  . $rs["id_uzytkownika"] . '",';
-    $outp .= '"login":"'  . $rs["login"] . '"}';
+    $outp .= '{"id_grupy":"'  . $rs["id_grupy"] . '",';
+    $outp .= '"login":"'. $rs["login"]     . '"}';
 }
 $outp ='{"records":['.$outp.']}';
 $conn->close();

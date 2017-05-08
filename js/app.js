@@ -125,14 +125,31 @@ MyApp.controller("page0Controller", function ($scope) {
 
 MyApp.controller("moneyController", function ($scope, $cookies, $http) {
     $scope.title = "moneyController";
-    var parameterShopping = JSON.stringify({type: "shopping", id_grupy: $cookies.get('id_grupy')});
+    var parameterShopping = JSON.stringify({type: "shopping", id_grupy: $cookies.get('id_grupy'),
+     shoppingDateFrom: "", shoppingDateTo: "", login: ""});
 
-    refreshTable();
-    getLogin(parameterShopping);
+    $http.post("./js/getLogins.php", parameterShopping)
+	        .then(function (response) {
+	        	$scope.loginsArray = response.data.records;
+
+	            console.log("Logins " + response.data.records[0].login);
+
+	        });
+
+    refreshTable(parameterShopping);
 
     $scope.searchShopping = function() {
-    	
-   		console.log(toDate($scope.shoppingDateFrom) + "  " + toDate($scope.shoppingDateTo));
+
+    	var shoppingDateFrom = toDate($scope.shoppingDateFrom);
+    	var shoppingDateTo = toDate($scope.shoppingDateTo);
+
+    	var parameterShopping = JSON.stringify({type: "shopping", id_grupy: $cookies.get('id_grupy'),
+    	shoppingDateFrom: shoppingDateFrom, shoppingDateTo: shoppingDateTo, login: $scope.selectedLogin});
+
+    	refreshTable(parameterShopping);
+
+   		console.log(shoppingDateFrom + "  " + shoppingDateTo + " " + $scope.selectedLogin);
+
     }
    
     $scope.orderByMe = function(x) {
@@ -148,11 +165,11 @@ MyApp.controller("moneyController", function ($scope, $cookies, $http) {
 	};
 
 	$scope.addShopping = function() {
-		alert("dodaj klienta");
 
+		var shoppingDate = toDate($scope.shoppingDate);
 		var parameterAddShopping = JSON.stringify({type: "addShopping", id_grupy: $cookies.get('id_grupy'),
 		                                          id_uzytkownika: $cookies.get('id_uzytkownika'), shoppingProduct: $scope.shoppingProduct, 
-		                                          shoppingPrice: $scope.shoppingPrice, shoppingDate: $scope.shoppingDate});
+		                                          shoppingPrice: $scope.shoppingPrice, shoppingDate: shoppingDate});
 
 		$http.post("./js/addShopping.php", parameterAddShopping)
             .then(function (response) {
@@ -169,7 +186,8 @@ MyApp.controller("moneyController", function ($scope, $cookies, $http) {
 		return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
 	}
 
-	function refreshTable() {
+	function refreshTable(parameterShopping) {
+		console.log(parameterShopping);
 	    $http.post("./js/zakupy.php", parameterShopping)
 	        .then(function (response) {
 	            console.log(response.data.records);
@@ -178,15 +196,7 @@ MyApp.controller("moneyController", function ($scope, $cookies, $http) {
 	        });
     }
 
-    function getLogin(parameterLogins) {
-    	console.log("tutaj");
-    	$http.post("./js/getLogins.php", parameterLogins)
-	        .then(function (response) {
-	        	var test = JSON.stringify(response.data);
-	            console.log("Logins " + response.data.records.login);
-	            console.log("test " + test);
-	        });
-    }
+  
 });
 
 MyApp.controller("dutiesController", function ($scope, $http) {
