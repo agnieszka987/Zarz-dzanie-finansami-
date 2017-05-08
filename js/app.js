@@ -137,7 +137,7 @@ MyApp.controller("moneyController", function ($scope, $cookies, $http) {
 	            var zakupyObj = response.data.records;
 	            $scope.zakupy = zakupyObj;
 	        });
-    }
+    };
 
     var parameterShopping = JSON.stringify({type: "shopping", id_grupy: $cookies.get('id_grupy')});
     refreshTable();
@@ -169,7 +169,7 @@ MyApp.controller("moneyController", function ($scope, $cookies, $http) {
 	}
 });
 
-MyApp.controller("dutiesController", function ($scope, $http) {
+MyApp.controller("dutiesController", function ($scope, $cookies, $http) {
     $scope.title = "dutiesController";
     
     var date = new Date();
@@ -214,6 +214,7 @@ MyApp.controller("dutiesController", function ($scope, $http) {
     };
     var dd = moment().set('date', 1).format("YYYY-MM-DD");
     $scope.okresy = weeks(moment(dd, 'YYYY-MM-DD', 'pl'));
+    $scope.miesiac = moment(dd, 'YYYY-MM-DD', 'pl').format('MMMM');
     console.log($scope.okresy.join(' , ') + " *** " + $scope.okresy.length);
     
     
@@ -227,7 +228,7 @@ MyApp.controller("dutiesController", function ($scope, $http) {
     console.log($scope.tabs);
     
     function showDuties() {
-	    $http.get("./js/duties.php")
+	    $http.post("./js/duties.php", parameterDuties)
 	        .then(function (response) {
 	            console.log(response.data.records);
 	            var dutiesObj = response.data.records;
@@ -235,6 +236,7 @@ MyApp.controller("dutiesController", function ($scope, $http) {
 	        });
     };
     
+    var parameterDuties = JSON.stringify({type: "duties", id_grupy: $cookies.get('id_grupy')});
     showDuties();
     
     $scope.slide = function() {
@@ -248,7 +250,7 @@ MyApp.controller("dutiesController", function ($scope, $http) {
     $scope.addDuty = function() {
 //		alert("dodaj klienta");
 
-		var parameterAddDuty = JSON.stringify({type: "addDuty", dutyName: $scope.dutyName});
+		var parameterAddDuty = JSON.stringify({type: "addDuty", dutyName: $scope.dutyName, id_grupy: $cookies.get('id_grupy')});
 
 		$http.post("./js/addDuty.php", parameterAddDuty)
             .then(function (response) {
