@@ -140,8 +140,21 @@ MyApp.controller("moneyController", function ($scope, $cookies, $http) {
 
     $scope.searchShopping = function() {
 
-    	var shoppingDateFrom = toDate($scope.shoppingDateFrom);
-    	var shoppingDateTo = toDate($scope.shoppingDateTo);
+        var shoppingDateFrom;
+        var shoppingDateTo;
+
+        if($scope.shoppingDateFrom == null) {
+            shoppingDateFrom = '0000-00-00';
+        } else {
+           shoppingDateFrom = toDate($scope.shoppingDateFrom); 
+        }
+    	
+        if($scope.shoppingDateTo == $scope.shoppingDateTo) {
+            shoppingDateTo = "9999-12-31";
+        } else {
+           shoppingDateTo = toDate($scope.shoppingDateTo) 
+        }
+
 
     	var parameterShopping = JSON.stringify({type: "shopping", id_grupy: $cookies.get('id_grupy'),
     	shoppingDateFrom: shoppingDateFrom, shoppingDateTo: shoppingDateTo, login: $scope.selectedLogin});
@@ -175,7 +188,7 @@ MyApp.controller("moneyController", function ($scope, $cookies, $http) {
             .then(function (response) {
                 console.log(response.data.records); 
                 $('#alertDodano').show();
-                refreshTable();
+                refreshTable(parameterShopping);
                 $scope.shoppingPrice = "";
                 $scope.shoppingDate = "";
                 $scope.shoppingProduct = "";
