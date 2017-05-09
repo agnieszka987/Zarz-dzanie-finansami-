@@ -53,13 +53,13 @@
     	<div class="container" id="shoppingTable">
     		<table class="table table-hover">
     			<tr>
-    				<th>Id użytkownika</th>
-    				<th>Id grupy</th>
-    				<th>Login</th>
-    				<th>Grupa</th>
-    				<th>Produkt</th>
-    				<th>Cena</th>
-    				<th>Data</th>
+    				<th ng-click="orderByMe('id_uzytkownika')">Id użytkownika</th>
+    				<th ng-click="orderByMe('id_grupy')">Id grupy</th>
+    				<th ng-click="orderByMe('login')">Login</th>
+    				<th ng-click="orderByMe('nazwa_grupy')">Grupa</th>
+    				<th ng-click="orderByMe('nazwa')">Produkt</th>
+    				<th ng-click="orderByMe('koszt')">Cena</th>
+    				<th ng-click="orderByMe('data_zakupu')">Data</th>
     			</tr>
     			<tr ng-repeat="x in zakupy | orderBy:myOrderBy">
     				<td>{{x.id_uzytkownika}}</td>
