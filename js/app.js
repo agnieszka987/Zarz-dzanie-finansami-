@@ -123,10 +123,11 @@ MyApp.controller("page0Controller", function ($scope) {
     $scope.title = "page0Controller";
 });
 
-MyApp.controller("moneyController", function ($scope, $cookies, $http) {
+MyApp.controller("moneyController", function ($scope, $cookies, $http, $window) {
     $scope.title = "moneyController";
     var parameterShopping = JSON.stringify({type: "shopping", id_grupy: $cookies.get('id_grupy'),
-     shoppingDateFrom: "", shoppingDateTo: "", login: ""});
+    shoppingDateFrom: "", shoppingDateTo: "", login: ""});
+    var zakupyObj;
 
     $http.post("./js/getLogins.php", parameterShopping)
 	        .then(function (response) {
@@ -149,7 +150,7 @@ MyApp.controller("moneyController", function ($scope, $cookies, $http) {
            shoppingDateFrom = toDate($scope.shoppingDateFrom); 
         }
     	
-        if($scope.shoppingDateTo == $scope.shoppingDateTo) {
+        if($scope.shoppingDateTo == null) {
             shoppingDateTo = "9999-12-31";
         } else {
            shoppingDateTo = toDate($scope.shoppingDateTo) 
@@ -177,6 +178,22 @@ MyApp.controller("moneyController", function ($scope, $cookies, $http) {
 		$("#form").slideUp("slow");
 	};
 
+	$scope.deleteShopping = function(deletingId, x) {
+		console.log(deletingId);
+
+		var parameterDeleteShopping = JSON.stringify({type: "deleteShopping", id_zakupu: deletingId});
+
+        if ($window.confirm("Czy chcesz usunąc wybrane zakupy")) {
+
+            $http.post("./js/deleteShopping.php", parameterDeleteShopping)
+            .then(function (response) {
+                console.log(response.data.records); 
+              //  $('#alertDodano').show();
+                refreshTable(parameterShopping);
+            });
+        }
+	}
+
 	$scope.addShopping = function() {
 
 		var shoppingDate = toDate($scope.shoppingDate);
@@ -201,10 +218,11 @@ MyApp.controller("moneyController", function ($scope, $cookies, $http) {
 
 	function refreshTable(parameterShopping) {
 		console.log(parameterShopping);
+		console.log($scope.shoppingDateFrom);
 	    $http.post("./js/zakupy.php", parameterShopping)
 	        .then(function (response) {
 	            console.log(response.data.records);
-	            var zakupyObj = response.data.records;
+	            zakupyObj = response.data.records;
 	            $scope.zakupy = zakupyObj;
 	        });
     }
