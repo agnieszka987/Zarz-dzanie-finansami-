@@ -1,33 +1,29 @@
 
 
 <div id="loginPage">
-	{{title}}
-
-	<div class="container" id="loginForm">
-		<div id="loginLogo">
-			<p>Logo</p>
-		</div>
-		<div id="loginInputs">
-			<form name="myForm">
+	<div class="container" id="loginForm" class="login-page">
+		<div id="loginInputs" class="form">
+			<form name="myForm" class="login-form">
+			<div>
+				<p id="formText">Logowanie</p>
+			</div>
 				<div class="form-group">
-					<label for="login">Podaj login</label>
-					<input type="text" id="login" class="form-control" ng-model="login" ng-minlength=4></input>
-					<span style="color:red" ng-show="myForm.login.$dirty && myForm.login.$invalid">
+					<input type="text" name="login" class="form-control" ng-model="login" ng-minlength=4 placeholder="login"></input>
+					<span style="color:grey; font-size:10px;" ng-show="myForm.login.$dirty && myForm.login.$invalid">
 						<span ng-show="myForm.login.$error.minlength">Login jest dłuższy niż 4 znaków.</span>
 						<span ng-show="myForm.login.$error.required">Wprowadź login.</span>
 					</span>
 				</div>
 				<div class="form-group">
-					<label for="password">Podaj hasło</label>
-					<input type="password" id="password" class="form-control" ng-model="password" ng-minlength=4></input>
-					<span style="color:red" ng-show="myForm.password.$dirty && myForm.password.$invalid">
+					<input type="password" name="password" class="form-control" ng-model="password" ng-minlength=4 placeholder="hasło"></input>
+					<span style="color:grey; font-size:10px;" ng-show="myForm.password.$dirty && myForm.password.$invalid">
 						<span ng-show="myForm.password.$error.minlength">Hasło jest dłuższe niż 4 znaków</span>
 						<span ng-show="myForm.password.$error.required">Wprowadź hasło.</span>
 					</span>
 				</div>
-				<input type="submit" value="Zaloguj" ng-click="zaloguj()" class="btn btn-primary btn-block" ng-disabled="(password && login) ?  false : true">
+				<input id="button" ng-click="zaloguj()" type="submit" value="Dodaj" class="btn btn-primary btn-block" ng-disabled="(password && login) ?  false : true">
 			</form>
-			<p id="signupLink"><a ui-sref="signup">Nie masz jeszcze konta?</a></p>
+			<p class="message">Nie masz jeszcze konta? <a ui-sref="signup">Zarejestruj się!</a></p>
 		</div>
 	</div>
 </div>
