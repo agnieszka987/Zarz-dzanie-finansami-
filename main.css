@@ -1,3 +1,48 @@
+
+/* customizacja nagłówka */
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    background-color: #393e58 ;
+    color: #FFFFFF;
+}
+
+a.navbar-brand:hover, a.navbar-brand:focus {
+    background-color: #393e58 ;
+    color: #FFFFFF;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: white; /*Change active text color here*/
+}
+
+.navbar-default .navbar-nav > li > a:focus  {
+  color: #c9c9c9; /*Change active text color here*/
+}
+
+.navbar {
+  border-radius: 0px;
+  border: 0px;
+}
+
+.navbar-default .navbar-brand {
+    color: #FFFFFF;
+}
+
+.navbar-default {
+    background-color: #252839;
+}
+
+#navbar {
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+    color:  #FFFFFF!important;
+}
+
+#navbar nav { 
+  background-color: #16174f;
+}
+
 #loginForm {
   margin-top: 50px;
   width: 35%;

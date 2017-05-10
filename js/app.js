@@ -1,4 +1,4 @@
-var MyApp = angular.module("MyApp", ['ui.router', 'ui.bootstrap', 'ngCookies']);
+var MyApp = angular.module("MyApp", ['ui.router', 'ui.bootstrap', 'ngCookies', 'ngMessages']);
 
 MyApp.config(['$qProvider', function ($qProvider) {
     $qProvider.errorOnUnhandledRejections(false);

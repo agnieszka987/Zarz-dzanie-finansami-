@@ -8,30 +8,48 @@
 			<p>Logo</p>
 		</div>
 		<div id="loginInputs">
-			<fieldset>
+			<form name="myForm">
 				<div class="form-group">
 					<label for="name">Imię:</label>
-					<input type="text" id="name" class="form-control" ng-model="name"></input>
+					<input type="text" name="name" class="form-control" ng-model="name" required></input>
+					<span style="color:red" ng-show="myForm.name.$dirty && myForm.name.$invalid"">
+						<span ng-show="myForm.name.$error.required">Wprowadź imię.</span>
+					</span>
 				</div>
 				<div class="form-group">
 					<label for="surname">Nazwisko:</label>
-					<input type="text" id="surname" class="form-control" ng-model="surname"></input>
+					<input type="text" name="surname" class="form-control" ng-model="surname" required></input>
+					<span style="color:red" ng-show="myForm.surname.$dirty && myForm.surname.$invalid">
+						<span ng-show="myForm.surname.$error.required">Wprowadź nazwisko.</span>
+					</span>
 				</div>
 				<div class="form-group">
 					<label for="email">Email:</label>
-					<input type="text" id="email" class="form-control" ng-model="email"></input>
+					<input type="email" name="email" class="form-control" ng-model="email" required>
+					<span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
+						<span ng-show="myForm.email.$error.required">Wprowadź adres email.</span>
+						<span ng-show="myForm.email.$error.email">Błądny adres email.</span>
+					</span>
 				</div>
+				
 				<div class="form-group">
 					<label for="login">Login:</label>
-					<input type="text" id="login" class="form-control" ng-model="login"></input>
+					<input type="text" name="login" class="form-control" ng-model="login" ng-minlength=5 required></input>
+					<span style="color:red" ng-show="myForm.login.$dirty && myForm.login.$invalid">
+						<span ng-show="myForm.login.$error.minlength">Login musi posiadać co najmniej 5 znaków</span>
+						<span ng-show="myForm.login.$error.required">Wprowadź login.</span>
+					</span>
 				</div>
 				<div class="form-group">
 					<label for="password">Hasło:</label>
-					<input type="password" id="password" class="form-control" ng-model="password"></input>
+					<input type="password" name="password" class="form-control" ng-model="password" ng-minlength=5 required></input>
+					<span style="color:red" ng-show="myForm.password.$dirty && myForm.password.$invalid">
+						<span ng-show="myForm.password.$error.minlength">Hasło musi posiadać co najmniej 5 znaków</span>
+						<span ng-show="myForm.password.$error.required">Wprowadź hasło.</span>
+					</span>
 				</div>
-				<input ng-click="dodajUzytkownika()" type="submit" value="Dodaj" class="btn btn-primary btn-block" data-ng-disabled="angularForm.$invalid">
-				<p id="signupLink"><a ui-sref="groups">Przejdz dalej - test</a></p>
-			</fieldset>
+				<input ng-click="dodajUzytkownika()" type="submit" value="Dodaj" class="btn btn-primary btn-block" ng-disabled="(name && login && email && surname && password) ?  false : true">
+			</form>
 		</div>
 	</div>
 </div>
