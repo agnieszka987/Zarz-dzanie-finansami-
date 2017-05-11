@@ -1,6 +1,12 @@
-@import url('https://fonts.googleapis.com/css?family=Pacifico');
+@import url('https://fonts.googleapis.com/css?family=Pacifico|Open+Sans|Yrsa');
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 /* customizacja nagłówka */
+
+.navbar {
+  margin-bottom:0;
+} 
+
 
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
     background-color: #393e58 ;
@@ -44,6 +50,19 @@ a.navbar-brand:hover, a.navbar-brand:focus {
   background-color: #16174f;
 }
 
+/* JUMBOTRON */
+
+.jumbotron {
+   background-image: url(Clouds.jpg);
+   height: 250px;
+}
+
+#jumbotron h2, #jumbotron h1, #jumbotron h3, #jumbotron h4{
+  padding-left: 20px;
+  margin: 10px;
+  color: #16174f;
+  font-family: 'Yrsa';
+}
 
 
 #signupLink {
@@ -54,19 +73,12 @@ a.navbar-brand:hover, a.navbar-brand:focus {
   margin-bottom: 10px!important;
 }
 
-#signUpGroup, #signInGroup {
-  width: 80%;
-  margin-top: 5px!important;
-  margin-left: auto;
-  margin-right: auto;
+#signInGroup, #signUpGroup {
+  margin-top:5px;
 }
 
 #modalForm {
-  margin-top: 50px!important;
-  margin-bottom: 50px!important;
-  margin-right: auto;
-  margin-left: auto;
-  width: 70%;
+  padding: 40px;
 }
 
 #form { 
@@ -99,11 +111,6 @@ a.navbar-brand:hover, a.navbar-brand:focus {
   width: 150px;
 }
 
-#jumbotron h2 {
-  padding-left: 20px;
-  margin: 10px;
-}
-
 #shoppingFilters {
   padding-top: 20px;
 }
@@ -113,8 +120,6 @@ a.navbar-brand:hover, a.navbar-brand:focus {
 }
 
 
-
-@import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 #loginInputs {
   margin-top: 100px;
@@ -157,7 +162,7 @@ a.navbar-brand:hover, a.navbar-brand:focus {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: #4CAF50;
+  background: #5959AB;
   width: 100%;
   border: 0;
   padding: 10px;
@@ -169,7 +174,7 @@ a.navbar-brand:hover, a.navbar-brand:focus {
   border-radius: 0px;
 }
 .form button:hover,.form button:active,.form button:focus {
-  background: #43A047;
+  background: #252839;
 }
 .form .message {
   margin: 15px 0 0;
@@ -177,7 +182,7 @@ a.navbar-brand:hover, a.navbar-brand:focus {
   font-size: 12px;
 }
 .form .message a {
-  color: #4CAF50;
+  color: #5959AB;
   text-decoration: none;
 }
 .form .register-form {
@@ -190,4 +195,95 @@ a.navbar-brand:hover, a.navbar-brand:focus {
   font-family: 'Pacifico', cursive;
   font-size: 25px;
 }
+.modal-title {
+    margin: 15px auto;
+    color: grey;
+    font-family: 'Pacifico', cursive;
+    font-size: 25px;
+    text-align: center;
+}
+
+#textLower {
+  margin-top: 20px;
+  margin-bottom: 35px;
+  color: grey;
+  font-family: 'Pacifico';
+  font-size: 15px;
+  text-align: justify;
+
+}
+
+.modal-dialog {
+  width: 400px;
+}
+
+.modal-content {
+  max-width: 360px;
+  margin: auto;
+  -webkit-border-radius: 0px !important;
+  -moz-border-radius: 0px !important;
+  border-radius: 0px !important; 
+}
+
+#modalForm input {
+  border-radius: 0px;
+}
+
+#groupSelect {
+  border-radius: 0px!important;
+  -webkit-appearance: none;
+  width: 100%;
+  padding: 6px 12px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #999999;
+}
+
+#groupSelect option, input, select, button {
+  border-radius: 0px!important;
+  -webkit-border-radius: 0px!important;
+}
+
+#selectLoginShopping {
+  border-radius: 0px!important;
+  -webkit-appearance: none;
+  width: 100px;
+  padding: 6px 12px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #999999;
+}
+
+#buttonJoinGroup {
+  background-color: #4CAF50;
+  border: 0;
+  padding: 10px;
+}
+
+.panel {
+  border-radius: 0px;
+    -webkit-border-radius: 0px;
+    text-align: center;
+    background-color: #16174f;
+    color: #FFF;
+}
+
+.panel-footer {
+   border-radius: 0px;
+    -webkit-border-radius: 0px;
+    background-color: #FFF;
+    color: #16174f;
+}
+
+#shoppingFilters div.form-group {
+  padding-right: 5px;
+}
+
+.panel h2, .panel h3 {
+  font-family: 'Open Sans';
+}
+
+
+
+
 

@@ -2,25 +2,24 @@
 
 
 
-  <div class="modal-header">
-            <h3 class="modal-title" >Dodaj nową grupę</h3>
-        </div>
-        <div class="modal-body" >
-            <div id="modalForm">
-				<fieldset>
-					<div class="form-group">
-						<label for="name">Nazwa:</label>
-						<input type="text" id="name" class="form-control" ng-model="name"></input>
-					</div>
-					<div class="form-group">
-						<label for="password">Hasło:</label>
-						<input type="password" id="password" class="form-control" ng-model="password"></input>
-					</div>
-					<div class="form-group">
-						<label for="password">Potwierdz hasło:</label>
-						<input type="password" id="name" class="form-control" ng-model="password2"></input>
-					</div>
-				</fieldset>
-				<input ng-click="dodajGrupe()" type="submit" value="Dodaj" class="btn btn-primary btn-block" data-ng-disabled="angularForm.$invalid">
+<div class="modal-header">
+	<p class="modal-title" >Dodaj nową grupę</p>
+</div>
+<div class="modal-body" >
+	<div id="modalForm">
+	<form>
+		<fieldset>
+			<div class="form-group">
+				<input type="text" id="name" class="form-control" ng-model="name" placeholder="nazwa grupy"></input>
 			</div>
-        </div>
+			<div class="form-group">
+				<input type="password" id="password" class="form-control" ng-model="password" placeholder="hasło"></input>
+			</div>
+			<div class="form-group">
+				<input type="password" id="name" class="form-control" ng-model="password2" placeholder="hasło"></input>
+			</div>
+		</fieldset>
+	</form>
+		<input id="buttonJoinGroup" ng-click="dodajGrupe()" type="submit" value="Dodaj" class="btn btn-primary btn-block" data-ng-disabled="angularForm.$invalid">
+	</div>
+</div>

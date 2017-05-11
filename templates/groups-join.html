@@ -2,23 +2,24 @@
 
 
 
- 		 <div class="modal-header">
-            <h3 class="modal-title" >Dołącz do grupy</h3>
-        </div>
-        <div class="modal-body" >
-            <div id="modalForm">
-				<fieldset>
-					<div class="form-group">
-						<label for="name">Wybierz grupę:</label>
-						<select ng-model="selectedGroup">
+<div class="modal-header">
+	<p class="modal-title" >Dołącz do grupy</p>
+</div>
+<div class="modal-body" >
+	<div id="modalForm">
+		<form>
+			<fieldset>
+				<div class="form-group">
+					<select id="groupSelect" class="selectpicker show-menu-arrow" ng-model="selectedGroup" data-width="auto" placeholder="Wybierz grupę">
+						<option value="" selected disabled>wybierz grupę</option>
 						<option ng-repeat="x in groupsName" value="{{x.login}}">{{x.login}}</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="password">Podaj hasło:</label>
-						<input type="password" id="password" class="form-control" ng-model="password"></input>
-					</div>
-				</fieldset>
-				<input ng-click="dodaj()" type="submit" value="Dodaj" class="btn btn-primary btn-block" data-ng-disabled="angularForm.$invalid">
-			</div>
-        </div>
+					</select>
+				</div>
+				<div class="form-group">
+					<input type="password" id="password" class="form-control" ng-model="password" placeholder="hasło"></input>
+				</div>
+			</fieldset>
+		</from>
+		<input id="buttonJoinGroup" ng-click="dodaj()" type="submit" value="DOŁĄCZ" class="btn btn-primary btn-block">
+	</div>
+</div>

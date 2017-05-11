@@ -42,22 +42,25 @@
                     <label for="dateTo">Data do:</label>
                     <input type="date" id="dateTo" class="form-control" ng-model="shoppingDateTo">
                 </div>
-                <label for="shoppingLogin">Użytkownik:</label>
-                 <select ng-model="selectedLogin">  
-                    <option ng-repeat="x in loginsArray" value="{{x.login}}">{{x.login}}</option>
-                 </select>
+                <div class="form-group">
+                    <label for="shoppingLogin">Użytkownik:</label>
+                     <select ng-model="selectedLogin" id="selectLoginShopping">  
+                        <option value="" selected disabled>wybierz</option>
+                        <option ng-repeat="x in loginsArray" value="{{x.login}}">{{x.login}}</option>
+                     </select>
+                </div>
                 <button id="searchButton" class="btn" ng-click="searchShopping()">Pokaż</button>
             </form>
         </div>
 
     	<div class="container" id="shoppingTable">
-    		<table class="table table-hover">
+    		<table class="table table-striped">
     			<tr>
                     <th ng-hide="true" ng-click="orderByMe('id_zakupu')">Id zakupu</th>
-    				<th ng-click="orderByMe('id_uzytkownika')">Id użytkownika</th>
-    				<th ng-click="orderByMe('id_grupy')">Id grupy</th>
+    				<th ng-hide="true" ng-click="orderByMe('id_uzytkownika')">Id użytkownika</th>
+    				<th ng-hide="true" ng-click="orderByMe('id_grupy')">Id grupy</th>
     				<th ng-click="orderByMe('login')">Login</th>
-    				<th ng-click="orderByMe('nazwa_grupy')">Grupa</th>
+    				<th ng-hide="true" ng-click="orderByMe('nazwa_grupy')">Grupa</th>
     				<th ng-click="orderByMe('nazwa')">Produkt</th>
     				<th ng-click="orderByMe('koszt')">Cena</th>
     				<th ng-click="orderByMe('data_zakupu')">Data</th>
@@ -65,10 +68,10 @@
     			</tr>
     			<tr ng-repeat="x in zakupy | orderBy:myOrderBy track by $index">
     				<td ng-hide="true">{{x.id_zakupu}}</td>
-                    <td>{{x.id_uzytkownika}}</td>
-    				<td>{{x.id_grupy}}</td>
+                    <td ng-hide="true" >{{x.id_uzytkownika}}</td>
+    				<td ng-hide="true" >{{x.id_grupy}}</td>
     				<td>{{x.login}}</td>
-    				<td>{{x.nazwa_grupy}}</td>
+    				<td ng-hide="true" >{{x.nazwa_grupy}}</td>
     				<td>{{x.nazwa}}</td>
     				<td>{{x.koszt | currency : "zł" : 2}}</td>
     				<td>{{x.data_zakupu}}</td>
