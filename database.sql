@@ -2,7 +2,8 @@ CREATE TABLE Grupy (
 id_grupy INT AUTO_INCREMENT, 
 login VARCHAR(255) NOT NULL, 
 haslo VARCHAR(100) NOT NULL,
-PRIMARY KEY (id_grupy)
+PRIMARY KEY (id_grupy),
+UNIQUE (id_grupy)
 );
 
 CREATE TABLE Uzytkownicy (
@@ -14,7 +15,8 @@ login VARCHAR(100) NOT NULL UNIQUE,
 haslo VARCHAR(100) NOT NULL,
 email VARCHAR(255),
 PRIMARY KEY (id_uzytkownika),
-FOREIGN KEY (id_grupy) REFERENCES Grupy(id_grupy)
+FOREIGN KEY (id_grupy) REFERENCES Grupy(id_grupy),
+UNIQUE (login)
 ); 
 
 CREATE TABLE Zadania_typ (
