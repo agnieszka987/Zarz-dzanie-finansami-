@@ -130,6 +130,7 @@ MyApp.controller("moneyController", function ($scope, $cookies, $http, $window) 
     var parameterShopping = JSON.stringify({type: "shopping", id_grupy: $cookies.get('id_grupy'),
     shoppingDateFrom: "", shoppingDateTo: "", login: ""});
     var zakupyObj;
+    var sumaZakupy = 0;
 
     $http.post("./js/getLogins.php", parameterShopping)
 	        .then(function (response) {
@@ -223,9 +224,16 @@ MyApp.controller("moneyController", function ($scope, $cookies, $http, $window) 
 		console.log($scope.shoppingDateFrom);
 	    $http.post("./js/zakupy.php", parameterShopping)
 	        .then(function (response) {
+
+	        	sumaZakupy = 0;
 	            console.log(response.data.records);
 	            zakupyObj = response.data.records;
 	            $scope.zakupy = zakupyObj;
+	            for (var i = 0; i < response.data.records.length; i++) {
+	            	console.log("Koszt: " + response.data.records[i].koszt);
+	            	sumaZakupy += parseFloat(response.data.records[i].koszt);
+	            }
+	            $scope.suma = sumaZakupy;
 	        });
     }
 
@@ -389,7 +397,7 @@ MyApp.controller("signupController", function ($scope, $http, $location, $cookie
                     $scope.email = "";
                     $location.path('/groups');
                 } else {
-                    alert("Ups, coś poszło nie tak..");
+                    alert("Ups, wybrany login jest już zajęty..");
                 }
             });
     };
@@ -423,7 +431,7 @@ MyApp.controller("groupsController", function ($scope, $uibModal, $cookies, $htt
                             $cookies.put('id_grupy', responseObj.records[0].id_grupy);
                             $location.path('/home');
                         } else {
-                            alert("Ups, coś poszło nie tak..");
+                            alert("Ups, wybrany login jest już zajęty..");
                         }
                     });
 		    } else {

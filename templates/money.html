@@ -50,6 +50,9 @@
                      </select>
                 </div>
                 <button id="searchButton" class="btn" ng-click="searchShopping()">Pokaż</button>
+                <div class="form-group" id="divSuma">
+                    <span><b>SUMA:</b> {{ suma | currency : "zł" : 2 }}</span>
+                </div>
             </form>
         </div>
 
