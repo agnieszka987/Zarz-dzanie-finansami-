@@ -47,14 +47,14 @@ a.navbar-brand:hover, a.navbar-brand:focus {
 }
 
 #navbar nav { 
-  background-color: #16174f;
+  background-color: #5959AB;
 }
 
 /* JUMBOTRON */
 
 .jumbotron {
-   background-image: url(../img/Clouds.jpg);
-   height: 250px;
+   background-image: url(../img/Clouds2.png);
+   height: 150px;
 }
 
 #jumbotron h2, #jumbotron h1, #jumbotron h3, #jumbotron h4{
