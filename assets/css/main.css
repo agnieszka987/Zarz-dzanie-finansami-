@@ -9,12 +9,12 @@
 
 
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-    background-color: #393e58 ;
+    background-color: #00797b ;
     color: #FFFFFF;
 }
 
 a.navbar-brand:hover, a.navbar-brand:focus {
-    background-color: #393e58 ;
+    background-color: #00797b ;
     color: #FFFFFF;
 }
 
@@ -23,7 +23,7 @@ a.navbar-brand:hover, a.navbar-brand:focus {
 }
 
 .navbar-default .navbar-nav > li > a:focus  {
-  color: #c9c9c9; /*Change active text color here*/
+  color: #00797b; /*Change active text color here*/
 }
 
 .navbar {
@@ -47,14 +47,14 @@ a.navbar-brand:hover, a.navbar-brand:focus {
 }
 
 #navbar nav { 
-  background-color: #5959AB;
+  background-color: #26a69a;
 }
 
 /* JUMBOTRON */
 
 .jumbotron {
    background-image: url(../img/Clouds2.png);
-   height: 150px;
+   height: 200px;
 }
 
 #jumbotron h2, #jumbotron h1, #jumbotron h3, #jumbotron h4{
@@ -119,6 +119,11 @@ a.navbar-brand:hover, a.navbar-brand:focus {
   margin-bottom: 10px;
 }
 
+.btn-dodaj, .btn-dodaj:hover, .btn-dodaj:focus, .btn-dodaj:active:focus {
+    background-color: #26a69a;
+    border-color: #26a69a;
+}
+
 
 
 #loginInputs {
@@ -162,7 +167,7 @@ a.navbar-brand:hover, a.navbar-brand:focus {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: #5959AB;
+  background: #26a69a;
   width: 100%;
   border: 0;
   padding: 10px;
@@ -182,7 +187,7 @@ a.navbar-brand:hover, a.navbar-brand:focus {
   font-size: 12px;
 }
 .form .message a {
-  color: #5959AB;
+  color: #26a69a;
   text-decoration: none;
 }
 .form .register-form {
@@ -264,7 +269,7 @@ a.navbar-brand:hover, a.navbar-brand:focus {
   border-radius: 0px;
     -webkit-border-radius: 0px;
     text-align: center;
-    background-color: #16174f;
+    background-color: #00897b;
     color: #FFF;
 }
 
@@ -281,6 +286,10 @@ a.navbar-brand:hover, a.navbar-brand:focus {
 
 .panel h2, .panel h3 {
   font-family: 'Open Sans';
+}
+
+i.fa.fa-arrow-circle-right {
+    color: #00897b;
 }
 
 
