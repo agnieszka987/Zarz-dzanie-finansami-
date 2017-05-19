@@ -4,6 +4,19 @@ MyApp.config(['$qProvider', function ($qProvider) {
     $qProvider.errorOnUnhandledRejections(false);
 }]);
 
+MyApp.run(['$rootScope', '$cookies', '$location', function($rootScope, $cookies, $location) {
+    
+    $rootScope.$on('$locationChangeStart', function (event, next, current) {
+        // redirect to login page if not logged in and trying to access a restricted page
+        var restrictedPage = $.inArray($location.path(), ['/login', '/signup']) === -1;
+        var loggedIn = $cookies.get('login');
+        console.log(loggedIn);
+        if (restrictedPage && !loggedIn) {
+            $location.path('/login');
+        }
+    });
+
+}]);
 
 MyApp.config(function ($stateProvider, $urlRouterProvider) {
 	$stateProvider
