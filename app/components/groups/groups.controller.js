@@ -3,7 +3,7 @@ MyApp.controller("groupsController", function ($scope, $uibModal, $cookies, $htt
     var user = $cookies.get('login');
     $scope.modalNew = function () {
 		var uibModalInstance = $uibModal.open({
-            templateUrl: 'groups/groups-new.html',
+            templateUrl: './app/components/groups/groups-new.template.html',
             scope: $scope
 		});
 
@@ -38,7 +38,7 @@ MyApp.controller("groupsController", function ($scope, $uibModal, $cookies, $htt
 	$scope.modalJoin = function () {
 		console.log('opening pop up');
 		var uibModalInstanceJoin = $uibModal.open({
-            templateUrl: 'groups/groups-join.html',
+            templateUrl: './app/components/groups/groups-join.template.html',
             scope: $scope
 		});
 
