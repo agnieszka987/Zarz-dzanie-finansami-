@@ -25,20 +25,32 @@
                 <button class="btn" ng-click="addDuty()">Zapisz</button>
             </form>
         </div>
+        <button id="signUpGroup" ng-click="modalAssign()" class="btn btn-primary">Przypisz zadanie</button>
     </div>
     <br>
 	<div class="container">      
         <uib-tabset active="active" justified="true">
-            <uib-tab index="$index" ng-repeat="tab in tabs" heading="{{tab.title}}">
-                <br><h4>{{okresy[$index]}} {{miesiac}}</h4><br>
+            <uib-tab index="$index" ng-repeat="tab in tabs" heading="{{tab.title}}" ng-init="tabIndex = $index" select="getDuties(okresy[$index].dateStart)">
+                <br><h4>{{okresy[tabIndex].str}} {{miesiac}}</h4><br>
                 <table class="table table-hover">
                     <tr>
-                        <th>Grupa</th>
-                        <th>Nazwa</th>
+                        <th>Zadanie</th>
+                        <th>Osoba</th>
+                        <th>Login</th>
                     </tr>
-                    <tr ng-repeat="x in duties">
-                        <td>{{tab.content}}</td>
-                        <td>{{x.nazwa}}</td>
+                    <tr ng-repeat="duty in dutiesList">
+                        <td>{{duty.nazwa_zadania}}</td>
+                        <td>{{duty.imie}} {{duty.nazwisko}}</td>
+                        <td> {{duty.login}}</td>
+<!--
+                        <td>
+                            <select id="userSelect" class="selectpicker show-menu-arrow" ng-model="selectedUser" data-width="auto" placeholder="Wybierz osobę">
+                                <option value="" selected disabled>wybierz osobę</option>
+                                <option ng-repeat="user in users" value="{{user.id_uzytkownika}}">{{user.imie}} {{user.nazwisko}}</option>
+                            </select>
+                        </td>
+-->
+<!--                        <td><i class="fa fa-check" aria-hidden="true" ng-click="saveDuty(duty, selectedUser, okresy[tabIndex].dateStart, okresy[tabIndex].dateEnd)"></i></td>-->
                         <td><i class="fa fa-trash" aria-hidden="true" ng-click="deleteCustomer($index)"></i></td>
                     </tr>
                 </table>

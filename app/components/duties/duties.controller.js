@@ -1,4 +1,4 @@
-MyApp.controller("dutiesController", function ($scope, $cookies, $http) {
+MyApp.controller("dutiesController", function ($scope, $uibModal, $cookies, $http) {
     $scope.title = "dutiesController";
     
     var date = new Date();
@@ -20,22 +20,37 @@ MyApp.controller("dutiesController", function ($scope, $cookies, $http) {
             return other;
         }
         return a.date();
-    }
+    };
 
     function weeks (m) {
         var lastOfMonth     = m.clone().endOf('month'),
             lastOfMonthDate = lastOfMonth.date(),
             firstOfMonth    = m.clone().startOf('month'),
             currentWeek     = firstOfMonth.clone().weekday(0),
+            month           = m.format('MM'),
+            year            = m.year(),
             output          = [],
             startOfWeek,
-            endOfWeek;
+            endOfWeek,
+            startOfWeekPom,
+            endOfWeekPom;
 
         while (currentWeek < lastOfMonth) {
             startOfWeek = sameMonth(currentWeek.clone().weekday(0), firstOfMonth, 1);
             endOfWeek = sameMonth(currentWeek.clone().weekday(6), firstOfMonth, lastOfMonthDate);
+            startOfWeekPom = startOfWeek;
+            endOfWeekPom = endOfWeek;
 
-            output.push(startOfWeek + ' - ' + endOfWeek);
+            if (String(startOfWeekPom).length < 2)
+                startOfWeekPom = '0' + startOfWeekPom;
+            if (String(endOfWeekPom).length < 2)
+                endOfWeekPom = '0' + endOfWeekPom;
+
+            output.push({
+                str:        startOfWeek + ' - ' + endOfWeek,
+                dateStart:  year + '-' + month + '-' + startOfWeekPom,
+                dateEnd:    year + '-' + month + '-' + endOfWeekPom
+            });
             currentWeek.add(7, 'd');
         }
 
@@ -44,7 +59,7 @@ MyApp.controller("dutiesController", function ($scope, $cookies, $http) {
     var dd = moment().set('date', 1).format("YYYY-MM-DD");
     $scope.okresy = weeks(moment(dd, 'YYYY-MM-DD', 'pl'));
     $scope.miesiac = moment(dd, 'YYYY-MM-DD', 'pl').format('MMMM');
-    console.log($scope.okresy.join(' , ') + " *** " + $scope.okresy.length);
+    //console.log($scope.okresy.join(' , ') + " *** " + $scope.okresy.length);
     
     
     
@@ -54,7 +69,7 @@ MyApp.controller("dutiesController", function ($scope, $cookies, $http) {
     };
     
     $scope.tabs = arr;
-    console.log($scope.tabs);
+    //console.log($scope.tabs);
     
     function showDuties() {
 	    $http.post("./api/duties.php", parameterDuties)
@@ -88,6 +103,89 @@ MyApp.controller("dutiesController", function ($scope, $cookies, $http) {
                 showDuties();
                 $scope.dutyName = "";
             });
+	};
+    
+    $scope.getDuties = function(starting) {
+	    
+        var parameterGetDuties = JSON.stringify({type: "dutiesUsers", id_grupy: $cookies.get('id_grupy'), date_start: starting});
+        
+        $http.post("./api/getDuties.php", parameterGetDuties)
+	        .then(function (response) {
+	            console.log(response.data.records);
+	            var dutiesList = response.data.records;
+	            $scope.dutiesList = dutiesList;
+	        });
+    };
+    
+//    var tabIndex = '';
+//    $scope.setIndex = function(index) {
+//        console.log('index: ' + index);
+//        tabIndex = index;
+//    };
+//    if (tabIndex == '')
+//        tabIndex = 0;
+//    console.log('tabIndex: ' + tabIndex);
+//    var start = $scope.okresy[tabIndex].dateStart;
+//    console.log(start + ' start');
+//    var parameterGetDuties = JSON.stringify({type: "dutiesUsers", id_grupy: $cookies.get('id_grupy'), date_start: start});
+//    getDuties();
+    
+    function getUsers() {
+	    $http.post("./api/users.php", parameterUsers)
+	        .then(function (response) {
+	            console.log(response.data.records);
+	            var groupUsers = response.data.records;
+	            $scope.users = groupUsers;
+	        });
+    };
+     
+    var parameterUsers = JSON.stringify({type: "dutiesUsers", id_grupy: $cookies.get('id_grupy')});
+    getUsers();
+    
+//    $scope.saveDuty = function(duty, user, start, end) {
+//		console.log(duty.nazwa + ' ' + duty.id_zadania_typ + ' ' + duty.id_grupy);
+//        console.log(user + ' ' + start + ' ' + end);
+//        
+//        var parameterSaveDuty = JSON.stringify({type: "saveDuty", id_uzytkownika: user, id_grupy: duty.id_grupy, id_zadania_typ: duty.id_zadania_typ, data_od: start, data_do: end});
+//
+//        $http.post("./api/saveDuty.php", parameterSaveDuty)
+//            .then(function (response) {
+//                console.log(response.data.records);
+//            });
+//        
+////		var parameterDeleteShopping = JSON.stringify({type: "deleteShopping", id_zakupu: deletingId});
+////
+////        if ($window.confirm("Czy chcesz usunąc wybrane zakupy")) {
+////
+////            $http.post("./api/deleteShopping.php", parameterDeleteShopping)
+////            .then(function (response) {
+////                console.log(response.data.records); 
+////              //  $('#alertDodano').show();
+////                refreshTable(parameterShopping);
+////            });
+////        }
+//	};
+    
+    $scope.modalAssign = function () {
+		var uibModalInstance = $uibModal.open({
+            templateUrl: './app/components/duties/duties-assign.template.html',
+            scope: $scope
+		});
+
+        $scope.saveDuty = function(duty, user, index) {
+            console.log(duty + ' ' + user + ' ' + index + ' ' + $scope.okresy[index].dateStart + ' ' + $scope.okresy[index].dateEnd);
+
+            var parameterSaveDuty = JSON.stringify({type: "saveDuty", id_uzytkownika: user, id_grupy: $cookies.get('id_grupy'), id_zadania_typ: duty,
+                                                    data_od: $scope.okresy[index].dateStart, data_do: $scope.okresy[index].dateEnd});
+
+            $http.post("./api/saveDuty.php", parameterSaveDuty)
+                .then(function (response) {
+                    console.log(response.data.records);
+                    alert('Zapisano!');
+                    uibModalInstance.close();
+                });
+        };
+
 	};
     
 });
