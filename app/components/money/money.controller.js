@@ -102,11 +102,14 @@ MyApp.controller("moneyController", function ($scope, $cookies, $http, $window) 
 	            console.log(response.data.records);
 	            zakupyObj = response.data.records;
 	            $scope.zakupy = zakupyObj;
-	            for (var i = 0; i < response.data.records.length; i++) {
+                var ilosc = response.data.records.length;
+	            for (var i = 0; i < ilosc; i++) {
 	            	console.log("Koszt: " + response.data.records[i].koszt);
 	            	sumaZakupy += parseFloat(response.data.records[i].koszt);
 	            }
+                var srednia = sumaZakupy / ilosc;
 	            $scope.suma = sumaZakupy;
+                $scope.srednia = srednia;
 	        });
     }
 
