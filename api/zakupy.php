@@ -31,31 +31,31 @@ if ($shoppingDateFrom == '' AND $shoppingDateTo == '' AND $login == '')  {
 }
 
 if ($data->shoppingDateFrom != '' AND $data->shoppingDateTo == '' AND $data->login == '')  {
-	$result = $conn->query("SELECT Zakupy.id_zakupu, Zakupy.id_uzytkownika, Zakupy.id_grupy, Zakupy.nazwa, koszt, data_zakupu, Uzytkownicy.login as login, Grupy.login as nazwa_grupy FROM Zakupy, Uzytkownicy, Grupy  WHERE Zakupy.id_uzytkownika = Uzytkownicy.id_uzytkownika AND Zakupy.id_grupy = '$data->id_grupy' AND Grupy.id_grupy = '$data->id_grupy' AND Zakupy.data_zakupu > '$shoppingDateFrom'");
+	$result = $conn->query("SELECT Zakupy.id_zakupu, Zakupy.id_uzytkownika, Zakupy.id_grupy, Zakupy.nazwa, koszt, data_zakupu, Uzytkownicy.login as login, Grupy.login as nazwa_grupy FROM Zakupy, Uzytkownicy, Grupy  WHERE Zakupy.id_uzytkownika = Uzytkownicy.id_uzytkownika AND Zakupy.id_grupy = '$data->id_grupy' AND Grupy.id_grupy = '$data->id_grupy' AND Zakupy.data_zakupu >= '$shoppingDateFrom'");
 }
 
 if ($data->shoppingDateFrom == '' AND $data->shoppingDateTo == '' AND $data->login != '')  {
     $result = $conn->query("SELECT Zakupy.id_zakupu, Zakupy.id_uzytkownika, Zakupy.id_grupy, Zakupy.nazwa, koszt, data_zakupu, Uzytkownicy.login as login, Grupy.login as nazwa_grupy FROM Zakupy, Uzytkownicy, Grupy  WHERE Zakupy.id_uzytkownika = Uzytkownicy.id_uzytkownika AND Zakupy.id_grupy = '$data->id_grupy' AND Grupy.id_grupy = '$data->id_grupy' AND Uzytkownicy.login = '$login'");
 }
 
-if ($data->shoppingDateFrom == '' AND $data->shoppingDateTo != '' AND $data->login === '')  {
-    $result = $conn->query("SELECT Zakupy.id_zakupu, Zakupy.id_uzytkownika, Zakupy.id_grupy, Zakupy.nazwa, koszt, data_zakupu, Uzytkownicy.login as login, Grupy.login as nazwa_grupy FROM Zakupy, Uzytkownicy, Grupy  WHERE Zakupy.id_uzytkownika = Uzytkownicy.id_uzytkownika AND Zakupy.id_grupy = '$data->id_grupy' AND Grupy.id_grupy = '$data->id_grupy' AND Zakupy.data_zakupu < '$shoppingDateTo'");
+if ($data->shoppingDateFrom == '' AND $data->shoppingDateTo != '' AND $data->login == '')  {
+    $result = $conn->query("SELECT Zakupy.id_zakupu, Zakupy.id_uzytkownika, Zakupy.id_grupy, Zakupy.nazwa, koszt, data_zakupu, Uzytkownicy.login as login, Grupy.login as nazwa_grupy FROM Zakupy, Uzytkownicy, Grupy  WHERE Zakupy.id_uzytkownika = Uzytkownicy.id_uzytkownika AND Zakupy.id_grupy = '$data->id_grupy' AND Grupy.id_grupy = '$data->id_grupy' AND Zakupy.data_zakupu <= '$shoppingDateTo'");
 }
 
 if ($data->shoppingDateFrom != '' AND $data->shoppingDateTo != '' AND $data->login == '')  {
-	$result = $conn->query("SELECT Zakupy.id_zakupu, Zakupy.id_uzytkownika, Zakupy.id_grupy, Zakupy.nazwa, koszt, data_zakupu, Uzytkownicy.login as login, Grupy.login as nazwa_grupy FROM Zakupy, Uzytkownicy, Grupy  WHERE Zakupy.id_uzytkownika = Uzytkownicy.id_uzytkownika AND Zakupy.id_grupy = '$data->id_grupy' AND Grupy.id_grupy = '$data->id_grupy' AND Zakupy.data_zakupu > '$shoppingDateFrom' AND Zakupy.data_zakupu < '$shoppingDateTo'");
+	$result = $conn->query("SELECT Zakupy.id_zakupu, Zakupy.id_uzytkownika, Zakupy.id_grupy, Zakupy.nazwa, koszt, data_zakupu, Uzytkownicy.login as login, Grupy.login as nazwa_grupy FROM Zakupy, Uzytkownicy, Grupy  WHERE Zakupy.id_uzytkownika = Uzytkownicy.id_uzytkownika AND Zakupy.id_grupy = '$data->id_grupy' AND Grupy.id_grupy = '$data->id_grupy' AND Zakupy.data_zakupu >= '$shoppingDateFrom' AND Zakupy.data_zakupu <= '$shoppingDateTo'");
 }
 
 if ($data->shoppingDateFrom != '' AND $data->shoppingDateTo != '' AND $data->login != '')  {
-	$result = $conn->query("SELECT Zakupy.id_zakupu, Zakupy.id_uzytkownika, Zakupy.id_grupy, Zakupy.nazwa, koszt, data_zakupu, Uzytkownicy.login as login, Grupy.login as nazwa_grupy FROM Zakupy, Uzytkownicy, Grupy  WHERE Zakupy.id_uzytkownika = Uzytkownicy.id_uzytkownika AND Zakupy.id_grupy = '$data->id_grupy' AND Grupy.id_grupy = '$data->id_grupy' AND Zakupy.data_zakupu > '$shoppingDateFrom' AND Zakupy.data_zakupu < '$shoppingDateTo' AND Uzytkownicy.login = '$login'");
+	$result = $conn->query("SELECT Zakupy.id_zakupu, Zakupy.id_uzytkownika, Zakupy.id_grupy, Zakupy.nazwa, koszt, data_zakupu, Uzytkownicy.login as login, Grupy.login as nazwa_grupy FROM Zakupy, Uzytkownicy, Grupy  WHERE Zakupy.id_uzytkownika = Uzytkownicy.id_uzytkownika AND Zakupy.id_grupy = '$data->id_grupy' AND Grupy.id_grupy = '$data->id_grupy' AND Zakupy.data_zakupu >= '$shoppingDateFrom' AND Zakupy.data_zakupu <= '$shoppingDateTo' AND Uzytkownicy.login = '$login'");
 }
 
 if ($data->shoppingDateFrom != '' AND $data->shoppingDateTo == '' AND $data->login != '')  {
-	$result = $conn->query("SELECT Zakupy.id_zakupu, Zakupy.id_uzytkownika, Zakupy.id_grupy, Zakupy.nazwa, koszt, data_zakupu, Uzytkownicy.login as login, Grupy.login as nazwa_grupy FROM Zakupy, Uzytkownicy, Grupy  WHERE Zakupy.id_uzytkownika = Uzytkownicy.id_uzytkownika AND Zakupy.id_grupy = '$data->id_grupy' AND Grupy.id_grupy = '$data->id_grupy' AND Zakupy.data_zakupu > '$shoppingDateFrom' AND Uzytkownicy.login = '$login'");
+	$result = $conn->query("SELECT Zakupy.id_zakupu, Zakupy.id_uzytkownika, Zakupy.id_grupy, Zakupy.nazwa, koszt, data_zakupu, Uzytkownicy.login as login, Grupy.login as nazwa_grupy FROM Zakupy, Uzytkownicy, Grupy  WHERE Zakupy.id_uzytkownika = Uzytkownicy.id_uzytkownika AND Zakupy.id_grupy = '$data->id_grupy' AND Grupy.id_grupy = '$data->id_grupy' AND Zakupy.data_zakupu >= '$shoppingDateFrom' AND Uzytkownicy.login = '$login'");
 }
 
 if ($data->shoppingDateFrom == '' AND $data->shoppingDateTo != '' AND $data->login != '')  {
-    $result = $conn->query("SELECT Zakupy.id_zakupu, Zakupy.id_uzytkownika, Zakupy.id_grupy, Zakupy.nazwa, koszt, data_zakupu, Uzytkownicy.login as login, Grupy.login as nazwa_grupy FROM Zakupy, Uzytkownicy, Grupy  WHERE Zakupy.id_uzytkownika = Uzytkownicy.id_uzytkownika AND Zakupy.id_grupy = '$data->id_grupy' AND Grupy.id_grupy = '$data->id_grupy' AND Zakupy.data_zakupu < '$shoppingDateTo' AND Uzytkownicy.login = '$login'");
+    $result = $conn->query("SELECT Zakupy.id_zakupu, Zakupy.id_uzytkownika, Zakupy.id_grupy, Zakupy.nazwa, koszt, data_zakupu, Uzytkownicy.login as login, Grupy.login as nazwa_grupy FROM Zakupy, Uzytkownicy, Grupy  WHERE Zakupy.id_uzytkownika = Uzytkownicy.id_uzytkownika AND Zakupy.id_grupy = '$data->id_grupy' AND Grupy.id_grupy = '$data->id_grupy' AND Zakupy.data_zakupu <= '$shoppingDateTo' AND Uzytkownicy.login = '$login'");
 }
 
 

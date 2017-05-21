@@ -53,8 +53,8 @@ a.navbar-brand:hover, a.navbar-brand:focus, .navbar-default .navbar-brand:focus,
 /* JUMBOTRON */
 
 .jumbotron {
-   background-image: url(../img/Clouds2.png);
-   height: 200px;
+    background-image: url(../img/Clouds2.png);
+    height: 200px;
 }
 
 #jumbotron h2, #jumbotron h1, #jumbotron h3, #jumbotron h4{
@@ -95,11 +95,11 @@ a.navbar-brand:hover, a.navbar-brand:focus, .navbar-default .navbar-brand:focus,
  }
 
  #js-close-form {
-     margin-bottom: 20px!important;
+    margin-bottom: 20px!important;
  }
 
  #shoppingTable {
-     padding-top: 10px;
+    padding-top: 10px;
  }
 
 #shoppingForm input {
@@ -107,7 +107,7 @@ a.navbar-brand:hover, a.navbar-brand:focus, .navbar-default .navbar-brand:focus,
  }
 
  #shoppingForm label {
-     width: 150px;
+    width: 150px;
 }
 
 #shoppingFilters {

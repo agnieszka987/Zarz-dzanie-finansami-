@@ -50,9 +50,6 @@
                      </select>
                 </div>
                 <button id="searchButton" class="btn" ng-click="searchShopping()">Pokaż</button>
-                <div class="form-group" id="divSuma">
-                    <span><b>SUMA:</b> {{ suma | currency : "zł" : 2 }}</span>
-                </div>
             </form>
         </div>
 
@@ -80,6 +77,13 @@
     				<td>{{x.data_zakupu}}</td>
     				<td><i class="fa fa-trash" aria-hidden="true" ng-click="deleteShopping(x.id_zakupu,$index)"></i></td>
     			</tr>
+                <tr>
+                    <th></th>
+    				<th>SUMA:</th>
+    				<th>{{ suma | currency : "zł" : 2 }}</th>
+    				<th></th>
+    				<th></th>
+                </tr>
     		</table>
     	</div>
     </div>
