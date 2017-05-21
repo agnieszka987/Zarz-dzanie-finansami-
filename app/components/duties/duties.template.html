@@ -5,7 +5,7 @@
 <div class="container">
 
     <div class="container">
-        <button class="btn btn-success btn-dodaj" ng-click="slide()">Dodaj nowe zadanie</button>
+        <button class="btn btn-success btn-dodaj" ng-click="slide()">Zdefiniuj nowe zadanie</button>
         <button class="btn btn-success btn-dodaj" ng-click="modalAssign()">Przypisz zadanie</button>
         
         <div class="alert alert-success alert-dismissible" id="alertDodano" role="alert">
@@ -20,7 +20,7 @@
 
             <form name="myForm" id="dutiesForm">
                 <div class="form-group form-inline">
-                    <label for="name">Czynności: </label>
+                    <label for="name">Zadanie: </label>
                     <input type="text" id="name" class="form-control" ng-model="dutyName">
                 </div>
                 <button class="btn" ng-click="addDuty()">Zapisz</button>

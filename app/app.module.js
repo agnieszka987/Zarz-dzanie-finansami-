@@ -98,6 +98,19 @@ MyApp.config(function ($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+        .state('common', {
+            url: "/common",
+            views: {
+                'header': {
+                    templateUrl: "app/components/navbar/navbar.template.html",
+                    controller: 'navbarController'
+                },
+                'content': {
+                    templateUrl: "app/components/common/common.template.html",
+                    controller: 'commonController'
+                }
+            }
+        })
     /*	.state('groupsNew', {
             url: "/groupsNew",
             views: {

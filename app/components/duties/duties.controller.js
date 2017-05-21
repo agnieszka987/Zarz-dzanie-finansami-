@@ -105,10 +105,13 @@ MyApp.controller("dutiesController", function ($scope, $uibModal, $cookies, $htt
             });
 	};
     
-    var starting2 = '';
+    //var starting2 = '';
     
     $scope.getDuties = function(starting) {
-	    starting2 = starting;
+	    //starting2 = starting;
+        if (typeof(Storage) !== "undefined") {
+            localStorage.setItem("startingDate", starting);
+        }
         getDuties(starting);
     };
     
@@ -142,12 +145,10 @@ MyApp.controller("dutiesController", function ($scope, $uibModal, $cookies, $htt
 
             $http.post("./api/deleteDuty.php", parameterDeleteDuty)
             .then(function (response) {
-                console.log(response.data.records); 
-                console.log('2: ' + starting2);
-                getDuties(starting2);
+                getDuties(localStorage.getItem("startingDate"));
             });
         }
-	}
+	};
     
     $scope.modalAssign = function () {
 		var uibModalInstance = $uibModal.open({
@@ -166,7 +167,7 @@ MyApp.controller("dutiesController", function ($scope, $uibModal, $cookies, $htt
                     alert('Zapisano!');
                     uibModalInstance.close();
                 });
-            getDuties(starting2);
+            getDuties(localStorage.getItem("startingDate"));
         };
 
 	};

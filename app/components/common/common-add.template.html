@@ -1,0 +1,16 @@
+
+<div class="modal-header">
+	<p class="modal-title" >Wprowadź koszty</p>
+</div>
+<div class="modal-body" >
+	<div id="modalForm">
+		<form>
+			<fieldset>
+                <div class="form-group">
+                    <input type="text" id="nazwa" class="form-control" ng-model="nazwaKosztu" placeholder="koszt wspólny"></input>                
+				</div>
+			</fieldset>
+		</from>
+		<input id="buttonJoinGroup" ng-click="addCommon(nazwaKosztu)" type="submit" value="ZAPISZ KOSZT" class="btn btn-primary btn-block">
+	</div>
+</div>

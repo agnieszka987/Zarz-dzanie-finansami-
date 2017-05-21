@@ -55,7 +55,9 @@ FOREIGN KEY(id_uzytkownika) REFERENCES Uzytkownicy(id_uzytkownika)
 CREATE TABLE Koszty_wsp_typ (
 id_koszt_wsp_typ INT AUTO_INCREMENT,
 nazwa VARCHAR(255),
-PRIMARY KEY(id_koszt_wsp_typ)
+id_grupy INT,
+PRIMARY KEY(id_koszt_wsp_typ),
+FOREIGN KEY (id_grupy) REFERENCES Grupy(id_grupy)
 );
 
 CREATE TABLE Koszty_wsp (

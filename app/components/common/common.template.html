@@ -1,0 +1,66 @@
+<div class="jumbotron" id="jumbotron">
+	<h2>Koszty wspólne</h2>
+</div>
+
+<div class="container">
+
+    <div class="container">
+        <button class="btn btn-success btn-dodaj" ng-click="modalAddCommon()">Zdefiniuj nowy koszt</button>
+        <button class="btn btn-success btn-dodaj" ng-click="slide()">Wprowadź koszty</button>
+        
+        <div class="alert alert-success alert-dismissible" id="alertDodano" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Gatuluję!</strong> Zapisano nowy koszt wspólny! :)
+        </div>
+
+        <div class="container" id="form">
+            <button id="js-btn-close-form" type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="hide()"><br/>
+                <span id="js-close-form" aria-hidden="true">&times;</span>
+            </button>
+
+            <form name="myForm" id="commonForm">
+				<div class="form-group form-inline">
+					<label for="commonSelect">Nazwa kosztu: </label>
+                    <select id="commonSelect" class="selectpicker show-menu-arrow" ng-model="selectedCommon" data-width="auto" placeholder="Wybierz koszt">
+						<option value="" selected disabled>wybierz koszt</option>
+						<option ng-repeat="cost in costsNames" value="{{cost.id_koszt_wsp_typ}}">{{cost.nazwa}}</option>
+					</select>
+                </div>
+                <div class="form-group form-inline">
+                    <label for="dataOd">Od: </label>
+                    <input type="date" id="dataOd" class="form-control" ng-model="startDate"></input>
+                </div>
+                <div class="form-group form-inline">
+                    <label for="dataDo">Do: </label>
+                    <input type="date" id="dataDo" class="form-control" ng-model="endDate"></input>
+                </div>
+                <div class="form-group form-inline">
+                    <label for="namcenae">Cena: </label>
+                    <input type="text" id="cena" class="form-control" ng-model="commonPrice"></input>
+                </div>
+                <button class="btn" ng-click="addCost()">Zapisz</button>
+            </from>
+        </div>
+    </div>
+    <br>
+	<div class="container">      
+        <table class="table table-striped">
+            <tr>
+                <th ng-click="orderByMe('nazwa_kosztu')">Nazwa</th>
+                <th ng-click="orderByMe('koszt')">Kwota</th>
+                <th ng-click="orderByMe('koszt')">Kwota na osobę</th>
+                <th ng-click="orderByMe('data_od')">Od</th>
+                <th ng-click="orderByMe('data_do')">Do</th>
+                <th></th>
+            </tr>
+            <tr ng-repeat="common in commonList | orderBy:myOrderBy track by $index">
+                <td>{{common.nazwa_kosztu}}</td>
+                <td>{{common.koszt | currency : "zł" : 2}}</td>
+                <td>{{common.koszt / ilosc | currency : "zł" : 2}}</td>
+                <td>{{common.data_od}}</td>
+                <td>{{common.data_do}}</td>
+                <td><i class="fa fa-trash" aria-hidden="true" ng-click="deleteCommon(common.id_koszt_wsp)"></i></td>
+            </tr>
+        </table>
+	</div>
+</div>
