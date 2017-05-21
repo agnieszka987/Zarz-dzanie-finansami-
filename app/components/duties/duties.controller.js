@@ -59,7 +59,6 @@ MyApp.controller("dutiesController", function ($scope, $uibModal, $cookies, $htt
     var dd = moment().set('date', 1).format("YYYY-MM-DD");
     $scope.okresy = weeks(moment(dd, 'YYYY-MM-DD', 'pl'));
     $scope.miesiac = moment(dd, 'YYYY-MM-DD', 'pl').format('MMMM');
-    //console.log($scope.okresy.join(' , ') + " *** " + $scope.okresy.length);
     
     
     
@@ -69,12 +68,10 @@ MyApp.controller("dutiesController", function ($scope, $uibModal, $cookies, $htt
     };
     
     $scope.tabs = arr;
-    //console.log($scope.tabs);
     
     function showDuties() {
 	    $http.post("./api/duties.php", parameterDuties)
 	        .then(function (response) {
-	            console.log(response.data.records);
 	            var dutiesObj = response.data.records;
 	            $scope.duties = dutiesObj;
 	        });
@@ -98,42 +95,32 @@ MyApp.controller("dutiesController", function ($scope, $uibModal, $cookies, $htt
 
 		$http.post("./api/addDuty.php", parameterAddDuty)
             .then(function (response) {
-                console.log(response.data.records); 
                 $('#alertDodano').show();
                 showDuties();
                 $scope.dutyName = "";
             });
 	};
     
+    var starting2 = '';
+    
     $scope.getDuties = function(starting) {
-	    
+	    starting2 = starting;
+        getDuties(starting);
+    };
+    
+    function getDuties(starting) {
         var parameterGetDuties = JSON.stringify({type: "dutiesUsers", id_grupy: $cookies.get('id_grupy'), date_start: starting});
         
         $http.post("./api/getDuties.php", parameterGetDuties)
 	        .then(function (response) {
-	            console.log(response.data.records);
 	            var dutiesList = response.data.records;
 	            $scope.dutiesList = dutiesList;
 	        });
     };
     
-//    var tabIndex = '';
-//    $scope.setIndex = function(index) {
-//        console.log('index: ' + index);
-//        tabIndex = index;
-//    };
-//    if (tabIndex == '')
-//        tabIndex = 0;
-//    console.log('tabIndex: ' + tabIndex);
-//    var start = $scope.okresy[tabIndex].dateStart;
-//    console.log(start + ' start');
-//    var parameterGetDuties = JSON.stringify({type: "dutiesUsers", id_grupy: $cookies.get('id_grupy'), date_start: start});
-//    getDuties();
-    
     function getUsers() {
 	    $http.post("./api/users.php", parameterUsers)
 	        .then(function (response) {
-	            console.log(response.data.records);
 	            var groupUsers = response.data.records;
 	            $scope.users = groupUsers;
 	        });
@@ -141,30 +128,6 @@ MyApp.controller("dutiesController", function ($scope, $uibModal, $cookies, $htt
      
     var parameterUsers = JSON.stringify({type: "dutiesUsers", id_grupy: $cookies.get('id_grupy')});
     getUsers();
-    
-//    $scope.saveDuty = function(duty, user, start, end) {
-//		console.log(duty.nazwa + ' ' + duty.id_zadania_typ + ' ' + duty.id_grupy);
-//        console.log(user + ' ' + start + ' ' + end);
-//        
-//        var parameterSaveDuty = JSON.stringify({type: "saveDuty", id_uzytkownika: user, id_grupy: duty.id_grupy, id_zadania_typ: duty.id_zadania_typ, data_od: start, data_do: end});
-//
-//        $http.post("./api/saveDuty.php", parameterSaveDuty)
-//            .then(function (response) {
-//                console.log(response.data.records);
-//            });
-//        
-////		var parameterDeleteShopping = JSON.stringify({type: "deleteShopping", id_zakupu: deletingId});
-////
-////        if ($window.confirm("Czy chcesz usunąc wybrane zakupy")) {
-////
-////            $http.post("./api/deleteShopping.php", parameterDeleteShopping)
-////            .then(function (response) {
-////                console.log(response.data.records); 
-////              //  $('#alertDodano').show();
-////                refreshTable(parameterShopping);
-////            });
-////        }
-//	};
     
     $scope.modalAssign = function () {
 		var uibModalInstance = $uibModal.open({
@@ -180,10 +143,10 @@ MyApp.controller("dutiesController", function ($scope, $uibModal, $cookies, $htt
 
             $http.post("./api/saveDuty.php", parameterSaveDuty)
                 .then(function (response) {
-                    console.log(response.data.records);
                     alert('Zapisano!');
                     uibModalInstance.close();
                 });
+            getDuties(starting2);
         };
 
 	};
