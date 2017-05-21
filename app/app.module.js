@@ -20,7 +20,7 @@ MyApp.run(['$rootScope', '$cookies', '$location', function($rootScope, $cookies,
 
 MyApp.config(function ($stateProvider, $urlRouterProvider) {
 	$stateProvider
-        .state('index', {
+        .state('main', {
             url: "",
             views: {
                 'header': {
@@ -28,7 +28,7 @@ MyApp.config(function ($stateProvider, $urlRouterProvider) {
                     controller: 'navbarController'
                 },
                 'content': {
-                    templateUrl: "index.html"
+                    templateUrl: "main.html"
                 }
             }
         })
