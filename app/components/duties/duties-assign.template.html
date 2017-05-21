@@ -7,19 +7,19 @@
 		<form>
 			<fieldset>
 				<div class="form-group">
-					<select id="dutySelect" class="selectpicker show-menu-arrow" ng-model="selectedDuty" data-width="auto" placeholder="Wybierz zadanie">
+					<select id="groupSelect" class="selectpicker show-menu-arrow" ng-model="selectedDuty" data-width="auto" placeholder="Wybierz zadanie">
 						<option value="" selected disabled>wybierz zadanie</option>
 						<option ng-repeat="duty in duties" value="{{duty.id_zadania_typ}}">{{duty.nazwa}}</option>
 					</select>
                 </div>
-                <div>
-                    <select id="userSelect" class="selectpicker show-menu-arrow" ng-model="selectedUser" data-width="auto" placeholder="Wybierz osobę">
+                <div class="form-group">
+                    <select id="groupSelect" class="selectpicker show-menu-arrow" ng-model="selectedUser" data-width="auto" placeholder="Wybierz osobę">
                         <option value="" selected disabled>wybierz osobę</option>
                         <option ng-repeat="user in users" value="{{user.id_uzytkownika}}">{{user.imie}} {{user.nazwisko}}</option>
                     </select>
 				</div>
-                <div>
-                    <select id="weekSelect" class="selectpicker show-menu-arrow" ng-model="selectedWeek" data-width="auto" placeholder="Wybierz termin">
+                <div class="form-group">
+                    <select id="groupSelect" class="selectpicker show-menu-arrow" ng-model="selectedWeek" data-width="auto" placeholder="Wybierz termin">
                         <option value="" selected disabled>wybierz termin</option>
                         <option ng-repeat="okres in okresy" value="{{$index}}">{{okres.str}} {{miesiac}}</option>
                     </select>

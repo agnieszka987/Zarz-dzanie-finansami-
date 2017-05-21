@@ -80,6 +80,10 @@ MyApp.controller("dutiesController", function ($scope, $uibModal, $cookies, $htt
     var parameterDuties = JSON.stringify({type: "duties", id_grupy: $cookies.get('id_grupy')});
     showDuties();
     
+    $scope.orderByMe = function(x) {
+		$scope.myOrderBy = x;
+	}
+    
     $scope.slide = function() {
 		$("#form").slideDown("slow");
 	};

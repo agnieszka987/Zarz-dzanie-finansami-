@@ -3,10 +3,11 @@
 </div>
 
 <div class="container">
-	<p></p>
 
     <div class="container">
-        <button class="btn btn-success btn-dodaj" ng-click="slide()">Dodaj nowe zadanie</button>    	
+        <button class="btn btn-success btn-dodaj" ng-click="slide()">Dodaj nowe zadanie</button>
+        <button class="btn btn-success btn-dodaj" ng-click="modalAssign()">Przypisz zadanie</button>
+        
         <div class="alert alert-success alert-dismissible" id="alertDodano" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Gatuluję!</strong> Zapisano nowe zadanie! :)
@@ -25,32 +26,23 @@
                 <button class="btn" ng-click="addDuty()">Zapisz</button>
             </form>
         </div>
-        <button id="signUpGroup" ng-click="modalAssign()" class="btn btn-primary">Przypisz zadanie</button>
     </div>
     <br>
 	<div class="container">      
         <uib-tabset active="active" justified="true">
             <uib-tab index="$index" ng-repeat="tab in tabs" heading="{{tab.title}}" ng-init="tabIndex = $index" select="getDuties(okresy[$index].dateStart)">
                 <br><h4>{{okresy[tabIndex].str}} {{miesiac}}</h4><br>
-                <table class="table table-hover">
+                <table class="table table-striped">
                     <tr>
-                        <th>Zadanie</th>
-                        <th>Osoba</th>
-                        <th>Login</th>
+                        <th ng-click="orderByMe('nazwa_zadania')">Zadanie</th>
+                        <th ng-click="orderByMe('imie')">Osoba</th>
+                        <th ng-click="orderByMe('login')">Login</th>
+                        <th></th>
                     </tr>
-                    <tr ng-repeat="duty in dutiesList">
+                    <tr ng-repeat="duty in dutiesList | orderBy:myOrderBy track by $index">
                         <td>{{duty.nazwa_zadania}}</td>
                         <td>{{duty.imie}} {{duty.nazwisko}}</td>
-                        <td> {{duty.login}}</td>
-<!--
-                        <td>
-                            <select id="userSelect" class="selectpicker show-menu-arrow" ng-model="selectedUser" data-width="auto" placeholder="Wybierz osobę">
-                                <option value="" selected disabled>wybierz osobę</option>
-                                <option ng-repeat="user in users" value="{{user.id_uzytkownika}}">{{user.imie}} {{user.nazwisko}}</option>
-                            </select>
-                        </td>
--->
-<!--                        <td><i class="fa fa-check" aria-hidden="true" ng-click="saveDuty(duty, selectedUser, okresy[tabIndex].dateStart, okresy[tabIndex].dateEnd)"></i></td>-->
+                        <td>{{duty.login}}</td>
                         <td><i class="fa fa-trash" aria-hidden="true" ng-click="deleteDuty(duty.id_zadania)"></i></td>
                     </tr>
                 </table>
