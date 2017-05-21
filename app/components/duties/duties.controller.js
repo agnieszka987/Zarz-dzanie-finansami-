@@ -1,4 +1,4 @@
-MyApp.controller("dutiesController", function ($scope, $uibModal, $cookies, $http) {
+MyApp.controller("dutiesController", function ($scope, $uibModal, $cookies, $http, $window) {
     $scope.title = "dutiesController";
     
     var date = new Date();
@@ -128,6 +128,22 @@ MyApp.controller("dutiesController", function ($scope, $uibModal, $cookies, $htt
      
     var parameterUsers = JSON.stringify({type: "dutiesUsers", id_grupy: $cookies.get('id_grupy')});
     getUsers();
+    
+    $scope.deleteDuty = function(deletingId) {
+		console.log(deletingId);
+
+		var parameterDeleteDuty = JSON.stringify({type: "deleteDuty", id_zadania: deletingId});
+
+        if ($window.confirm("Czy chcesz usunąc wybraną pozycję?")) {
+
+            $http.post("./api/deleteDuty.php", parameterDeleteDuty)
+            .then(function (response) {
+                console.log(response.data.records); 
+                console.log('2: ' + starting2);
+                getDuties(starting2);
+            });
+        }
+	}
     
     $scope.modalAssign = function () {
 		var uibModalInstance = $uibModal.open({
